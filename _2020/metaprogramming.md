@@ -12,8 +12,8 @@ video:
 Aslında "metaprogramming" derken neyi kastediyoruz? İşin aslı, bu terim kod yazmaktan veya 
 verimli çalışmaktan farklı olarak, daha çok
 _süreçleri_ ifade etmek adına bulabildiğimiz en müşterek, en kolektif kavramdı .
-Bu derste; amacı kodunuzu derlemek, test etmek ve bağımlılıkları yönetmek olan sistemleri inceleyeceğiz.
-Bu konu bir öğrenci olarak size önemsiz gibi gözükebilir, Fakat stajyerlik dönemizde veya "gerçek dünyaya" atıldığınız zaman
+Bu derste; kodlarınızı derleyen, test eden ve bağımlılıklarını yöneten sistemleri inceleyeceğiz.
+Bu konu bir öğrenci olarak size önemsiz gibi gözükebilir fakat stajyerlik dönemizde veya "gerçek dünyaya" atıldığınız zaman
 büyük kod tabanlarıyla karşılaşacaksınız, işte o zaman bu kavram sık sık karşınıza çıkacak.
 Bahsetmekte fayda var,
 "metaprogramming" aynı zamanda "[programları çalıştıran program](https://en.wikipedia.org/wiki/Metaprogramming)", 
@@ -36,7 +36,7 @@ bütünü de denebilir.Genellikle, bu işlem birçok adım ve branch barındır�
 "Bu grafiği elde etmek için bunu 
 çalıştırın, sonuçları elde etmek farklı bir şey çalıştırın,
 dökümanın son halini elde etmek için daha farklı bir şey 
-çalıştırın" vs . Bu derste gördüğümüz çoğu şey gibi, 
+çalıştırın" vs.Bu derste gördüğümüz çoğu şey gibi, 
 bu baş belası durumla karşılaşan ilk kişi siz değilsiniz, 
 şansınıza size yardım edecek pek çok araç mevcut!
 
@@ -51,8 +51,8 @@ bu sistemin işi hedefin tüm geçişli bağımlılıklarını bulmaktır, daha 
 önceki derlemeden elde ettiği sonuçları tekrar kullanır.
 
 `make` en sık kullanılan build system'lerden birisidir, bunu her "UNIX-based" bilgisayarda yüklenmiş olarak 
-bulabilirsiniz. kendine özgü handikapları olduğu halde projelerinizi yönetmekte oldukça iyi iş çıkarmaktadır. 
-`make` komutunu çalıştırdığınızda, dizininizde bulunan `Makefile` adındakı dosyaya başvurur. 
+bulabilirsiniz.Kendine özgü handikapları olduğu halde projelerinizi yönetmekte oldukça iyi iş çıkarmaktadır. 
+`make` komutunu çalıştırdığınızda, dizininizde bulunan `Makefile` adındaki dosyaya başvurur. 
 Bütün hedefler, onların bağımlılıkları ve kurallar bu dosyada tanımlanmıştır. 
 Mesela bir tanesini inceleyelim:
 
@@ -98,7 +98,7 @@ make: *** No rule to make target 'plot-data.png', needed by 'paper.pdf'.  Stop.
 Hmm, ilginç,  `plot-data.png` dosyasını yapmak için bir kural var, fakat bu
 
 düzen kuralı(pattern rule). Kaynak dosyası mevcut olmadığı için (`foo.dat`), `make`
-basitçe bu dosyayı yapamayacağını söylüyor. Şimdi bütün dosyaları yaratmayı deneyelim:
+basitçe bu dosyayı yapamayacağını söylüyor. Şimdi bütün dosyaları oluşturmayı deneyelim:
 
 ```console
 $ cat paper.tex
@@ -186,10 +186,10 @@ Bu depoların çalışma mekanikleri birbirlerinden farklı olduğu için, herha
 hakkında daha fazla detaya inmeyeceğiz. Bunun yerine her depoda ortak bulunan terimlerden bahsedeceğiz. Bunlardan 
 ilki _versioning_'dir(versiyonlama).
 
-Çoğu proje, her yayımladığı sürüm için bir _version number_(sürüm numarası)na 
+Çoğu proje, her yayımladığı sürüm için bir _version number_(sürüm numarası)'a 
 sahiptir. Genellikle bunlar 8.1.3 veya 
 64.1.20192004 gibi sayılardır. Bunlar çoğu zaman -fakat her zaman değil- numerik sayılardır.
-sürüm numaraları birçok amaca hizmet eder, 
+Sürüm numaraları birçok amaca hizmet eder, 
 bunlardan en önemlisi yazılımın çalıştığını garanti altına almaktır. 
 
 Örnek vermek gerekirse, benim bir kütüphaneme yeni bir sürüm çıkardığımı hayal edin.
@@ -206,7 +206,7 @@ Her basamağın anlamı projeden projeye farklılık
 gösterebilir. Fakat genel standart [_semantik sürümleme_](https://semver.org/) olarak adlandırılır.
 Semantik sürümlemede, her sürüm numarası şu şekilde oluşur: **major.minor.patch**.  
 
-Bu sürümleme yönteminde kurallarşu şekildedir:
+Bu sürümleme yönteminde kurallar şu şekildedir:
  <ol>
  <li>Eğer yeni sürüm API'yi değiştirmiyorsa, patch numarasını (son rakam) arttırın.</li>
  <li>Eğer API'ye geriye uyumlu bir <strong>ekleme</strong> yaptıysanız, minör numarasını (ortadaki rakam) arttırın</li>
@@ -232,7 +232,7 @@ haberimiz olmadan kendini güncellemesini engellemek gibi(ki bu durumun yazılı
 sebebi vardır.
 
 Bağımlılık kitleme (dependency locking) kavramının aşırı yapıldığı duruma _vendoring_ denir. 
-Vendoring'de bağımlılıklarınızın bütün kodlarını kendi projesine kopyalarsınız, 
+Vendoring'de bağımlılıklarınızın bütün kodlarını kendi projenize kopyalarsınız, 
 bu sizin bağımlılıklar üzerinde tam bir kontrol elde etmenizi sağlar.
 Bu sayede kendi arzunuza göre bağımlılıklar üzerinde ekleme-çıkarma yapabilirsiniz.
 Fakat bağımlılıklara herhangi bir güncelleme geldiği zaman otomatik güncellemeyeceği için sizin 
@@ -269,9 +269,9 @@ Bu işleme "test kodu düzgün çalışmazsa beni uyar" tarzında ayarlar ekleye
 CI sistemlere örnek olarak şuan bulunduğunuz websitesi örnek verilebilir,
 bu websitenin kodları Github Pages'de bulunuyor.
 Açık kaynak bir proje olan Jekyll website oluşturma aracını kullanarak yaratılan websitemize, herhangi bir 
-ekleme yaptığımızda (ki bunu depomuzdaki `master` branch'ine yapıyoruz ) Github Pages CI araçlarını çalıştırır ve 
+ekleme yaptığımızda (ki bunu depomuzdaki `master` branch'ine yapıyoruz) Github Pages CI araçlarını çalıştırır ve 
 bizim için entegrasyon işlemlerini halleder.
-Bu, websayfasını güncellemeyi çok kolay bir hale getirir. lokalde değişiklikleri yapın,
+Bu, websayfasını güncellemeyi çok kolay bir hale getirir.Lokalde değişiklikleri yapın,
 daha sonra git aracılığıyla commit edin ve gerisine karışmayın!
 CI geri kalan işlemlerin hepsini halledecektir.
  
@@ -308,9 +308,7 @@ düşünün. Yukarıdaki `paper.pdf` `Makefile` dosyası için bir `clean` hedef
 
 2. Bağımlılıklar için sürüm gereksinimlerini belirtmenin çeşitli yollarına göz atın [Rust'ın build system'i](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html) buna güzel bir örnek olarak verilebilir.
 
-   Çoğu paket depoları benzer syntax'a sahiptir. her birinde kullanılan ortak karakterler vardır
-   (_caret, tilde, wildcard, comparison, and multiple gibi_), Bu karakterlerin önem arzettiği bir kullanım senaryosu 
-   oluşturun.
+ Çoğu paket depoları benzer syntax'a sahiptir. Her birinde kullanılan ortak karakterler vardır; _caret, tilde, wildcard, comparison ve multiple gibi_.. Bu karakterlerin önem arzettiği bir kullanım senaryosu oluşturun.
  
 3. Git kendi başına bir CI servisi gibi kullanılabilir. 
  
@@ -334,6 +332,6 @@ düşünün. Yukarıdaki `paper.pdf` `Makefile` dosyası için bir `clean` hedef
    [`proselint`](http://proselint.com/) çalıştıran Github action'ınızı yazın. 
    [`write-good`](https://github.com/btford/write-good) uygulamasını
  
-   kendi deponuzdaki `.md` dosyalarında çalışacak şekilde ayarlayın . Daha sonra çalışıp çalışmadığını test etmek 
+   kendi deponuzdaki `.md` dosyalarında çalışacak şekilde ayarlayın .Daha sonra çalışıp çalışmadığını test etmek 
    için yazım hatası bulunan bir pull request gönderin.
 
