@@ -33,7 +33,7 @@ Projenin anlık durumunu [buradan](https://github.com/missing-semester-tr/missin
 | 8 | [metaprogramming.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/_2020/metaprogramming.md)  | [`@mustafasakalli`](https://github.com/mustafasakalli) | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/2020/metaprogramming) |
 | 9 | [security.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/_2020/security.md)  | [`@calganaygun`](https://github.com/calganaygun) | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/2020/security/) |
 | 10 | [potpourri.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/_2020/potpourri.md) |  [`@aliozgur`](https://github.com/aliozgur) | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/2020/potpourri/) |
-| 11 | [qa.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/_2020/qa.md) | [`@baspinarenes`](https://github.com/baspinarenes) | Çeviri devam ediyor 🛠️ |
+| 11 | [qa.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/_2020/qa.md) | [`@baspinarenes`](https://github.com/baspinarenes) | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/qa) |
 | * | [about.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/about.md)  | [`@hasantezcan`](https://github.com/hasantezcan)  | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/about/) |
 | * | [license.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/license.md)  | [`@alpercun`](https://github.com/alpercun)  | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/license/) |
 
