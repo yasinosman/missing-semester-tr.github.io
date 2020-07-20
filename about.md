@@ -59,7 +59,7 @@ Vim makroları en iyi özelliklerinden biridir, aşağıdaki örnekte, bir html 
 
 SSH anahtarları ve terminal multiplexing kullanarak uzak makinelerle çalışırken nasıl akıl sağlığımızı koruruz?
 Artık aynı anda iki komutu çalıştırmak için birçok terminali açık tutmaya gerek yok.
-Artık her bağlandığınızda prolanızı yazmanıza gerek yok.
+Artık her bağlandığınızda parolanızı yazmanıza gerek yok.
 Artık internet bağlantınız kesildiğinden veya dizüstü bilgisayarınızı yeniden başlattığınızdan her şeyi kaybetmenize gerek yok.
 
 Aşağıdaki örnekte, oturumları uzak sunucularda canlı tutmak için "tmux" ve ağ dolaşımını ve bağlantıyı kesmek için "mosh" kullanıyoruz.
