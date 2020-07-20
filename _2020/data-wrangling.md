@@ -2,75 +2,72 @@
 layout: lecture
 title: "Data Wrangling"
 date: 2019-01-16
-ready: false
+ready: true
 video:
   aspect: 56.25
   id: sz_dsktIjt4
 ---
 
-Have you ever wanted to take data in one format and turn it into a
-different format? Of course you have! That, in very general terms, is
-what this lecture is all about. Specifically, massaging data, whether in
-text or binary format, until you end up with exactly what you wanted.
+Daha önce sahip olduğunuz belirli bir türdeki veriyi 
+farklı bir türe dönüştürmeye çalışmış mıydınız? 
+Bu ders, tamamen sözkonusu bu dönüşümle ilgilidir.  
+Özellikle, elinizdeki herhangi bir veriyi 'text' veya 'binary' gibi dilediğiniz herhangi bir formata dönüştürmekle ilgilidir.
 
-We've already seen some basic data wrangling in past lectures. Pretty
-much any time you use the `|` operator, you are performing some kind of
-data wrangling. Consider a command like `journalctl | grep -i intel`. It
-finds all system log entries that mention Intel (case insensitive). You
-may not think of it as wrangling data, but it is going from one format
-(your entire system log) to a format that is more useful to you (just
-the intel log entries). Most data wrangling is about knowing what tools
-you have at your disposal, and how to combine them.
+Aslında önceki derslerde zaten veri dönüşümü (data wrangling) gerçekleştirmiştik. 
+Örneğin `|` operatörünü kullandığımız çoğu zaman bir veri türünü farklı bir veri türüne dönüştürmüş oluruz. 
+Örneğin `journalctl | grep -i intel` komutu  sistemdeki içinde 'Intel' geçen bütün kayıtları bulmaktadır 
+(Burada küçük/büyük harf önemsizdir).  
+Bu işlem ilk bakışta 'data wrangling' olarak görülmese de burada veriler bir türden (sistemdeki bütün kayıtlar) 
+farklı bir türe (yalnızca içinde 'intel' geçen kayıtlar) dönüşmektedir. 
+Yani 'data wrangling' elimizde hangi araçların bulunduğunu ve bu araçları nasıl kullanabileceğimizi 
+bilmekle ilgili bir işlemdir. 
 
-Let's start from the beginning. To wrangle data, we need two things:
-data to wrangle, and something to do with it. Logs often make for a good
-use-case, because you often want to investigate things about them, and
-reading the whole thing isn't feasible. Let's figure out who's trying to
-log into my server by looking at my server's log:
+'Data wrangling' yapmak için temel olarak iki şeye gerek duymaktayız. 
+Değiştireceğimiz, üzerinde oynayacağımız bir tür veri ve daha sonrasında bu veri ile gerçekleştireceğimiz herhangi bir işlem. 
+Bu bağlamda sistem kayıtları oldukça iyi bir örnektir, çünkü çoğu zaman sistem kayıtlarını inceleyerek çeşitli işlemler gerçekleştirmek isteriz ancak bütün sistem kayıtlarını okumak pek mümkün değildir. 
+Aşağıda, sistem kayıtlarını inceleyerek sunucumuza ('myserver') giriş yapmaya çalışan kişileri tespit edebilmemizi 
+sağlayan bir dizi komut bulunmaktadır:
 
 ```bash
 ssh myserver journalctl
 ```
-
-That's far too much stuff. Let's limit it to ssh stuff:
+Bu komut bizim istediğimizden çok daha fazla çıktı üretecektir. Bu yüzden aşağıdaki gibi bir komut yazmayı deneyebiliriz:
 
 ```bash
 ssh myserver journalctl | grep sshd
 ```
 
-Notice that we're using a pipe to stream a _remote_ file through `grep`
-on our local computer! `ssh` is magical, and we will talk more about it
-in the next lecture on the command-line environment. This is still way
-more stuff than we wanted though. And pretty hard to read. Let's do
-better:
+Burada yerel bilgisayarımızda bir remote dosyası yayınlamak için `grep` kullanıyoruz. 
+`ssh` oldukça kompleks bir işlem olduğundan bu kavram gelecek derste ayrıntılı bir şekilde incelenecektir.  
+Konuya geri dönecek olursak, bu komuttan elde ettiğimiz veri bizim için hala çok fazla 
+olduğundan bu veriyi biraz daha özelleştirebiliriz. 
 
 ```bash
 ssh myserver 'journalctl | grep sshd | grep "Disconnected from"' | less
 ```
 
-Why the additional quoting? Well, our logs may be quite large, and it's
-wasteful to stream it all to our computer and then do the filtering.
-Instead, we can do the filtering on the remote server, and then massage
-the data locally. `less` gives us a "pager" that allows us to scroll up
-and down through the long output. To save some additional traffic while
-we debug our command-line, we can even stick the current filtered logs
-into a file so that we don't have to access the network while
-developing:
+Burada ekstra tırnak işareti kullanmamızın sebebi, sistem kayıtlarımızı bilgisayara aktarıp 
+filtrelemek yerine bu filtreleme işlemini uzak sunucuda gerçekleştirip daha sonra bilgisayarımızda 
+zaten filtrelenmiş olan veriyi daha kolay bir şekilde işlemektir. 
+Komutun sonundaki `less` , bir `pager` oluşturarak komutun çıktısı üzerinde yukarı aşağı kaydırmamızı 
+sağlamakta ve okuma işlemimizi kolaylaştırmaktadır. 
+Komut satırımızda sistemimizle ilgili hata ayıklama yaparken veriden tasarruf 
+etmek adına filtrelenmiş verileri bir dosyaya kaydedip daha sonra bu dosyadan okuma yapabiliriz.
 
 ```console
 $ ssh myserver 'journalctl | grep sshd | grep "Disconnected from"' > ssh.log
 $ less ssh.log
 ```
 
-There's still a lot of noise here. There are _a lot_ of ways to get rid
-of that, but let's look at one of the most powerful tools in your
-toolkit: `sed`.
+Bu komut halen istemediğimiz kadar çok fazla sonuç üretmekte, 
+bu sonuçları sadeleştirmek için başvurabileceğimiz oldukça farklı yöntem bulunmakta. 
+Örnek olarak `sed` komutunu kullanabiliriz.
 
-`sed` is a "stream editor" that builds on top of the old `ed` editor. In
-it, you basically give short commands for how to modify the file, rather
-than manipulate its contents directly (although you can do that too).
-There are tons of commands, but one of the most common ones is `s`:
-substitution. For example, we can write:
+`sed` bir çeşit `stream editor` işlevi görmektedir. 
+`sed` komutunu kullanırken çoğu zaman içeriğe doğrudan müdahele etmek yerine dosyaları 
+nasıl düzenleyeceğimizi belirten komutlar kullanırız. 
+Dosyaları düzenlememizi sağlayan bu komutlardan çok fazla bulunmaktadır. 
+Ancak bunlardan en yaygın olarak kullanılanı `s` komutudur. Örneğin:
 
 ```bash
 ssh myserver journalctl
@@ -79,119 +76,105 @@ ssh myserver journalctl
  | sed 's/.*Disconnected from //'
 ```
 
-What we just wrote was a simple _regular expression_; a powerful
-construct that lets you match text against patterns. The `s` command is
-written on the form: `s/REGEX/SUBSTITUTION/`, where `REGEX` is the
-regular expression you want to search for, and `SUBSTITUTION` is the
-text you want to substitute matching text with.
+Yukarıdaki kod, bir çeşit `regular expression` (düzenli ifade) oluşturmamızı sağlar. 
+Regular expressionlar metinleri belirli bir filtreleme işleminden geçirmemizi sağlar.  
+`s` komutu şu şekilde yazılır:`s/REGEX/SUBSTITUTION/`; burada` REGEX` kullanmak istediğimiz 
+regular expressiona ve `SUBSTITUTION` eşleşen metnin yerine koymak istediğiniz metne karşılık gelmektedir.
 
-## Regular expressions
+## Regular expressions (Düzenli ifadeler)
 
-Regular expressions are common and useful enough that it's worthwhile to
-take some time to understand how they work. Let's start by looking at
-the one we used above: `/.*Disconnected from /`. Regular expressions are
-usually (though not always) surrounded by `/`. Most ASCII characters
-just carry their normal meaning, but some characters have "special"
-matching behavior. Exactly which characters do what vary somewhat
-between different implementations of regular expressions, which is a
-source of great frustration. Very common patterns are:
+Regular expressions, günümüzde yaygın olarak kullanılan faydalı bir kavram olduğundan 
+incelememiz bizim iyiliğimize olacaktır. 
+Yukarıda kullandığımız şeye bakarak başlayalım: `/.*Disconnected from/`. 
+Burada da görüldüğü gibi regular expressionlar çoğu zaman (her zaman olmasa da) ` /` ile çevrelenir. 
+Regular expression kullanırken çoğu ASCII karakteri normal anlamlarını taşısa da 
+"özel" anlamlar barındıran bazı karakterler de bulunmaktadır. 
+Aşağıda regular expression oluştururken sıkça kullanılan karakterler verilmiştir:
+ 
+  - `.` yeni satır hariç "herhangi bir tek karakter"
+  - `*` önceki eşleşmenin sıfır veya daha fazlası
+  - `+` önceki eşleşmenin bir veya daha fazlası
+  - `[abc]` `a`, `b` ve `c` karakterlerinden herhangi biri
+  - `(RX1 | RX2)` ya `RX1` ya da `RX2` ile eşleşen bir şey
+  - `^` satırın başlangıcı
+  - `$` satırın sonu
 
- - `.` means "any single character" except newline
- - `*` zero or more of the preceding match
- - `+` one or more of the preceding match
- - `[abc]` any one character of `a`, `b`, and `c`
- - `(RX1|RX2)` either something that matches `RX1` or `RX2`
- - `^` the start of the line
- - `$` the end of the line
+`sed` kullarak regular expression oluştururken bu ifadelerin çoğundan önce 
+bir `\` koymamız gerekir. Ya da `-E` de kullanabiliriz.
 
-`sed`'s regular expressions are somewhat weird, and will require you to
-put a `\` before most of these to give them their special meaning. Or
-you can pass `-E`.
-
-So, looking back at `/.*Disconnected from /`, we see that it matches
-any text that starts with any number of characters, followed by the
-literal string "Disconnected from &rdquo;. Which is what we wanted. But
-beware, regular expressions are trixy. What if someone tried to log in
-with the username "Disconnected from"? We'd have:
+Bu nedenle, ` /.*Disconnected from / `a baktığımızda herhangi bir sayıda 
+karakterle başlayan ve ardından `Disconnected from `
+değişmez dizesiyle başlayan herhangi bir metinle eşleştiğini görüyoruz. 
+Bizim de ulaşmaya çalıştığımız sonuç buydu. 
+Ancak kötü niyetli birisinin kullanıcı adını "Disconnected from" yapıp giriş yapmaya çalışsa ne olurdu ?
 
 ```
 Jan 17 03:13:00 thesquareplanet.com sshd[2631]: Disconnected from invalid user Disconnected from 46.97.239.16 port 55920 [preauth]
 ```
 
-What would we end up with? Well, `*` and `+` are, by default, "greedy".
-They will match as much text as they can. So, in the above, we'd end up
-with just
+Regular expressionlardaki `*` ve `+` karakterleri "açgözlü" dür. 
+Onlar mümkün olduğunca çok metin ile eşleşmeye çalışırlar. 
+Yani, aslında elimizde sadece aşağıdaki sonuç kalmış olurdu:
 
 ```
 46.97.239.16 port 55920 [preauth]
 ```
 
-Which may not be what we wanted. In some regular expression
-implementations, you can just suffix `*` or `+` with a `?` to make them
-non-greedy, but sadly `sed` doesn't support that. We _could_ switch to
-perl's command-line mode though, which _does_ support that construct:
+Bu tam olarak istediğimiz sonuç olmayabilir. 
+Bazı regular expression uygulamalarında, daha iyi filtreleme için `*` veya `+` yi `?` ile sonlandırabilirsiniz, 
+ancak ne yazık ki `sed` bunu desteklemez. Ancak biz de Perl'in komut satırı moduna geçebiliriz, bu da şu yapıyı destekler:
 
 ```bash
 perl -pe 's/.*?Disconnected from //'
 ```
 
-We'll stick to `sed` for the rest of this, because it's by far the more
-common tool for these kinds of jobs. `sed` can also do other handy
-things like print lines following a given match, do multiple
-substitutions per invocation, search for things, etc. But we won't cover
-that too much here. `sed` is basically an entire topic in and of itself,
-but there are often better tools.
+Biz eğitimin kalan kısmında `sed` kullanmaya devam edeceğiz, 
+çünkü `sed` komutu bu tür işlerde işimizi oldukça kolaylaştıran yaygın bir komuttur. 
+`sed` komutu ayrıca bir eşleşme içeren satırları yazdırmada, her kullanıldığında 
+yeni bir işlem gerçekleştirmede, bir şeyleri aramada da kullanılabilir. 
+`sed` komutu başlı başına ayrı bir konu olsa da, bazı işler için kullanılacak bazı farklı yöntemler de bulabiliriz. 
 
-Okay, so we also have a suffix we'd like to get rid of. How might we do
-that? It's a little tricky to match just the text that follows the
-username, especially if the username can have spaces and such! What we
-need to do is match the _whole_ line:
+Kurtulmamız gereken son bir sonek de var. 
+Bunu nasıl yapabiliriz? Yalnızca kullanıcı adını takip eden metni eşleştirmek biraz zordur,
+özellikle de kullanıcı adı boşluklara ve benzeri semboller içeriyor ise. 
+Yapmamız gereken tüm çizgiyi eşleştiren bir komut yazmak:
 
 ```bash
  | sed -E 's/.*Disconnected from (invalid |authenticating )?user .* [^ ]+ port [0-9]+( \[preauth\])?$//'
 ```
 
-Let's look at what's going on with a [regex
-debugger](https://regex101.com/r/qqbZqh/2). Okay, so the start is still
-as before. Then, we're matching any of the "user" variants (there are
-two prefixes in the logs). Then we're matching on any string of
-characters where the username is. Then we're matching on any single word
-(`[^ ]+`; any non-empty sequence of non-space characters). Then the word
-"port" followed by a sequence of digits. Then possibly the suffix
-`[preauth]`, and then the end of the line.
+Bir [regular expression hata ayıklayıcı](https://regex101.com/r/qqbZqh/2) ile neler olup bittiğine bakalım. 
+Tamam, başlangıç hala eskisi gibi. Ardından, "user" değişkenlerinden herhangi birini eşleştiriyoruz (günlüklerde iki önek var). 
+Ardından, kullanıcı adının bulunduğu herhangi bir karakter dizesiyle eşleşiriz. 
+Sonra tek bir kelimeyle eşleşiyoruz (`[^] +`; boşluk olmayan karakterlerin boş olmayan herhangi bir sırası). 
+Sonra "port" kelimesinin ardından bir dizi rakam gelir. Sonra muhtemelen 
+`[preauth]` soneki ve sonra satırın sonu.
 
-Notice that with this technique, as username of "Disconnected from"
-won't confuse us any more. Can you see why?
+Bu tekniği kullanırsa bir kullanıcının kullanıcı adı `Disconnected from` olsa bile bizi zor duruma sokmayacaktır. 
+Nedenini fark edebildiniz mi ?
 
-There is one problem with this though, and that is that the entire log
-becomes empty. We want to _keep_ the username after all. For this, we
-can use "capture groups". Any text matched by a regex surrounded by
-parentheses is stored in a numbered capture group. These are available
-in the substitution (and in some engines, even in the pattern itself!)
-as `\1`, `\2`, `\3`, etc. So:
+
+Bununla ilgili bir sorun var ve bu tüm günlüğün boşalması. 
+Sonuçta kullanıcı adını korumak istiyoruz.
+Bunun için `capture groups` kullanabiliriz. Parantezle çevrili bir regular expression ile eşleşen tüm metinler, 
+numaralandırılmış bir capture group (yakalama grubu) içerisinde saklanır. 
+Bunlar substituion kısmında (ve bazı motorlarda, desenin kendisinde bile!) `\ 1`,` \ 2`, `\ 3` şeklinde saklanabilir.
 
 ```bash
  | sed -E 's/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/'
 ```
 
-As you can probably imagine, you can come up with _really_ complicated
-regular expressions. For example, here's an article on how you might
-match an [e-mail
-address](https://www.regular-expressions.info/email.html). It's [not
-easy](https://emailregex.com/). And there's [lots of
-discussion](https://stackoverflow.com/questions/201323/how-to-validate-an-email-address-using-a-regular-expression/1917982).
-And people have [written
-tests](https://fightingforalostcause.net/content/misc/2006/compare-email-regex.php).
-And [test matrices](https://mathiasbynens.be/demo/url-regex). You can
-even write a regex for determining if a given number [is a prime
-number](https://www.noulakaz.net/2007/03/18/a-regular-expression-to-check-for-prime-numbers/).
+Tahmin edebileceğiniz gibi, gerçekten karmaşık regular expressionlar yaratabilirsiniz. 
+Örneğin, [bu makale](https://www.regular-expressions.info/email.html) bir e-posta adresi ile nasıl eşleşebileceğinizle ilgili. 
+Bu [oldukça zor](https://emailregex.com/) bir işlemdir. 
+Ve bu konu hakkında çok sayıda [tartışma](https://stackoverflow.com/questions/201323/how-to-validate-an-email-address-using-a-regular-expression/1917982) yapılmıştır.
+Ve insanlar bu regular expressionları [test](https://fightingforalostcause.net/content/misc/2006/compare-email-regex.php) etmiş ve [test matrisleri](https://mathiasbynens.be/demo/url-regex) geliştirmiştir. 
+Hatta belirli bir sayının [asal sayı](https://www.noulakaz.net/2007/03/18/a-regular-expression-to-check-for-prime-numbers/ ) 
+olup olmadığını belirlemek için bir regular expression (normal ifade) bile yazabilirsiniz.
+Regular expressionlar öğrenmesi çok zor olsa da  işimize oldukça fazla yarayabilmektedir.
 
-Regular expressions are notoriously hard to get right, but they are also
-very handy to have in your toolbox!
-
-## Back to data wrangling
-
-Okay, so we now have
+## Data wrangling'e dönüş
+Yukarıdaki bölümün bir sonucu olarak elimizde aşağıdaki gibi bir kod kalıyor:
 
 ```bash
 ssh myserver journalctl
@@ -200,14 +183,12 @@ ssh myserver journalctl
  | sed -E 's/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/'
 ```
 
-`sed` can do all sorts of other interesting things, like injecting text
-(with the `i` command), explicitly printing lines (with the `p`
-command), selecting lines by index, and lots of other things. Check `man
-sed`!
+`sed` komutu, metin enjekte etme  (text injecting) (`i` komutunun yardımıyla), 
+satırları yazdırma (`p`komutu ile), dizine göre satır seçme ve daha pek çok ilginç şeyi yapabilir. 
+Bu konuda detaylı bilgi için `mansed` i araştırabilirsiniz.
 
-Anyway. What we have now gives us a list of all the usernames that have
-attempted to log in. But this is pretty unhelpful. Let's look for common
-ones:
+Neyse. Şu an sahip olduklarımız, giriş yapmaya çalışan tüm kullanıcı adlarının bir listesini veriyor. 
+Ancak bu bizim bir işimize yaramaz. Ortak olanları arayalım:
 
 ```bash
 ssh myserver journalctl
@@ -217,10 +198,9 @@ ssh myserver journalctl
  | sort | uniq -c
 ```
 
-`sort` will, well, sort its input. `uniq -c` will collapse consecutive
-lines that are the same into a single line, prefixed with a count of the
-number of occurrences. We probably want to sort that too and only keep
-the most common logins:
+`sort` komutu girdileri sıralamamızı sağlar. `uniq -c`, aynı sayıda ardışık satırları tek bir satıra daraltır 
+ve bunları  belirlenmiş bir sayıda tekrar eder. 
+Muhtemelen bunu sıralamak ve sadece en yaygın girişleri tutmak isteriz. Bunun için de:
 
 ```bash
 ssh myserver journalctl
@@ -231,17 +211,15 @@ ssh myserver journalctl
  | sort -nk1,1 | tail -n10
 ```
 
-`sort -n` will sort in numeric (instead of lexicographic) order. `-k1,1`
-means "sort by only the first whitespace-separated column". The `,n`
-part says "sort until the `n`th field, where the default is the end of
-the line. In this _particular_ example, sorting by the whole line
-wouldn't matter, but we're here to learn!
+`sort -n` komutu sonuçları sayısal olarak sıralar. 
+`-k1, 1` komutu 'yalnızca boşluklarla ayrılmış ilk sütuna göre sırala' anlamına gelmektedir. 
+`,n` kısmı ise sonuçları n. satıra kadar sıralamamızı sağlar. 
+Eğer burada bir değer belirtmeseydik sonuçlar varsayılan olarak satırın sonuna kadar sıralanacaktı.
 
-If we wanted the _least_ common ones, we could use `head` instead of
-`tail`. There's also `sort -r`, which sorts in reverse order.
+En az yaygın olanları isteseydik, `tail` yerine `head` kullanabilirdik. 
+Ayrıca `sort -r` komutu da ters sırada sıralama yapmamızı sağlar.
 
-Okay, so that's pretty cool, but we'd sort of like to only give the
-usernames, and maybe not one per line?
+Tamam, peki her satıra bir kullanıcı adı vermek isteseydik ne yapabilirdik ?
 
 ```bash
 ssh myserver journalctl
@@ -253,40 +231,34 @@ ssh myserver journalctl
  | awk '{print $2}' | paste -sd,
 ```
 
-Let's start with `paste`: it lets you combine lines (`-s`) by a given
-single-character delimiter (`-d`). But what's this `awk` business?
+`paste` komutu, satırları (` -s`) belirli bir tek karakterli sınırlayıcı (` -d`) ile birleştirmemizi sağlar. 
+Peki ya `awk` ne işe yarar?
 
-## awk -- another editor
+## awk -- farklı bir editör
 
-`awk` is a programming language that just happens to be really good at
-processing text streams. There is _a lot_ to say about `awk` if you were
-to learn it properly, but as with many other things here, we'll just go
-through the basics.
+`awk` , genel olarak metin (text stream) işlenirken kullanılan bir programlama dilidir. 
+`awk` hakkında öğrenebileceğiniz çok sayıda şey bulunmasına rağmen biz bu bölümde yalnızca temelleri inceleyeceğiz.
 
-First, what does `{print $2}` do? Well, `awk` programs take the form of
-an optional pattern plus a block saying what to do if the pattern
-matches a given line. The default pattern (which we used above) matches
-all lines. Inside the block, `$0` is set to the entire line's contents,
-and `$1` through `$n` are set to the `n`th _field_ of that line, when
-separated by the `awk` field separator (whitespace by default, change
-with `-F`). In this case, we're saying that, for every line, print the
-contents of the second field, which happens to be the username!
+İlk olarak `{print $2}` komutunu inceleyelim. 
+`awk` programları genellikle metinlerin nasıl olması gerektiğiyle ilgili bir blok ve 
+eğer metin istenen şekildeyse ne yapılacağıyla ilgili bir blok içermektedir.
+Varsayılan, yani bizim yukarıda kullandığımız pattern (yani metinler için istenen özellik), 
+bütün satırlar ile eşleşebilir.
+`$0` komutu bütün satırların içeriğini belirlememize, `$1` ve `$n` komutları ise 
+boşluklarla ayrılmış `$n`. (n'inci) bölgeyi belirlememize yardımcı olur.
+Özetle yukarıdaki komutla demek istediğimiz, her satır için, ikinci alanın içeriğini (yani kullanıcı adını) yazdırmış oluyoruz.
 
-Let's see if we can do something fancier. Let's compute the number of
-single-use usernames that start with `c` and end with `e`:
+Daha da karmaşık bir örnek vermek gerekirse, aşağıdaki kod `c` ile başlayıp `e` ile biten kullanıcı adlarını yazdırmamızı sağlar.
 
 ```bash
  | awk '$1 == 1 && $2 ~ /^c[^ ]*e$/ { print $2 }' | wc -l
 ```
 
-There's a lot to unpack here. First, notice that we now have a pattern
-(the stuff that goes before `{...}`). The pattern says that the first
-field of the line should be equal to 1 (that's the count from `uniq
--c`), and that the second field should match the given regular
-expression. And the block just says to print the username. We then count
-the number of lines in the output with `wc -l`.
+Buradaki pattern, satırın ilk alanının 1'e eşit olması ve ikinci alanın 
+verilen regular expression ile eşleşmesi gerektiğini belirtir. 
+İkinci kısımda ise kullanıcı adını yazdırır, daha sonra da çıktı sayısını `wc - l` komutu ile sayarız.
 
-However, `awk` is a programming language, remember?
+`awk` bir programlama dili olduğuna göre bu işlemi aşağıdaki gibi de yapabiliriz:
 
 ```awk
 BEGIN { rows = 0 }
@@ -294,31 +266,28 @@ $1 == 1 && $2 ~ /^c[^ ]*e$/ { rows += $1 }
 END { print rows }
 ```
 
-`BEGIN` is a pattern that matches the start of the input (and `END`
-matches the end). Now, the per-line block just adds the count from the
-first field (although it'll always be 1 in this case), and then we print
-it out at the end. In fact, we _could_ get rid of `grep` and `sed`
-entirely, because `awk` [can do it
-all](https://backreference.org/2010/02/10/idiomatic-awk/), but we'll
-leave that as an exercise to the reader.
+Burada `BEGIN` komutu girdilerin başlangıcıyla `END` komutu ise sonuyla ilgilenmektedir. 
+Burada her satır başına ilk alandaki sayıyı ekleyip en sonunda bu sayıyı yazdırırız. 
+Bu sayede `grep` ve `sed` komutundan bile kurtulabiliriz çünkü `awk` [çok fazla işlem](https://backreference.org/2010/02/10/idiomatic-awk/) gerçekleştirebilir.
 
-## Analyzing data
+## Veri analizi
 
-You can do math! For example, add the numbers on each line together:
+Regular expressionlar ve çeşitli farklı yöntemler ile elde ettiğimiz veriler ile 
+farklı işlemler yapabiliriz. 
+Örneğin aşağıdaki komut bütün satırlardaki sayıları toplamamızı sağlar: 
 
 ```bash
  | paste -sd+ | bc -l
 ```
-
-Or produce more elaborate expressions:
+ 
+Veya daha ayrıntılı olarak:
 
 ```bash
 echo "2*($(data | paste -sd+))" | bc -l
 ```
 
-You can get stats in a variety of ways.
-[`st`](https://github.com/nferraz/st) is pretty neat, but if you already
-have R:
+Çok farklı şekilde sonuçlar elde edebiliriz.
+[`st`](https://github.com/nferraz/st) komutu da oldukça faydalıdır:
 
 ```bash
 ssh myserver journalctl
@@ -329,13 +298,12 @@ ssh myserver journalctl
  | awk '{print $1}' | R --slave -e 'x <- scan(file="stdin", quiet=TRUE); summary(x)'
 ```
 
-R is another (weird) programming language that's great at data analysis
-and [plotting](https://ggplot2.tidyverse.org/). We won't go into too
-much detail, but suffice to say that `summary` prints summary statistics
-about a matrix, and we computed a matrix from the input stream of
-numbers, so R gives us the statistics we wanted!
+R, genellikle veri analizi ve 
+[çizim (plotting)](https://ggplot2.tidyverse.org/) için kullanılan garip bir programlama dilidir.
+Bu bölümde R hakkında çok fazla ayrıntıya girilmeyecek, 
+ancak `summary` komutu bir matris çözerek sonuçları bize sunar.
 
-If you just want some simple plotting, `gnuplot` is your friend:
+Ancak sadece basit bir çizim yapmak istiyorsak `gnuplot` da kullanabiliriz.
 
 ```bash
 ssh myserver journalctl
@@ -347,23 +315,22 @@ ssh myserver journalctl
  | gnuplot -p -e 'set boxwidth 0.5; plot "-" using 1:xtic(2) with boxes'
 ```
 
-## Data wrangling to make arguments
+## Argüman üretmek için data wrangling
 
-Sometimes you want to do data wrangling to find things to install or
-remove based on some longer list. The data wrangling we've talked about
-so far + `xargs` can be a powerful combo:
+Bazen bir veri listesine dayanarak yüklenecek veya kaldırılacak şeyler bulabiliriz. 
+Şimdiye kadar öğrendiğimiz data wrangling yöntemleri ve `xargs` işimizi bu bölümde oldukça kolaylaştıracaktır.
 
 ```bash
 rustup toolchain list | grep nightly | grep -vE "nightly-x86" | sed 's/-x86.*//' | xargs rustup toolchain uninstall
 ```
 
-## Wrangling binary data
+## Binary veriler ile data wrangling yapmak
 
-So far, we have mostly talked about wrangling textual data, but pipes
-are just as useful for binary data. For example, we can use ffmpeg to
-capture an image from our camera, convert it to grayscale, compress it,
-send it to a remote machine over SSH, decompress it there, make a copy,
-and then display it.
+Çalışmanın bu bölümüne kadar hep metin verileri işlemiştik. 
+Ancak bu işlemleri binary veriler için de yapabiliriz. 
+Örneğin kendi kameramızdan `ffmpeg` verisi yakalayıp bunu `grayscale` veriye dönüştürüp sıkıştırabilir, 
+daha sonra SSH aracılığı ile uzaktaki bir bilgisayara gönderip orada sıkıştırmayı geri açıp, 
+videomuzu oraya kopyalayıp görüntüleyebiliriz.
 
 ```bash
 ffmpeg -loglevel panic -i /dev/video0 -frames 1 -f image2 -
@@ -372,23 +339,21 @@ ffmpeg -loglevel panic -i /dev/video0 -frames 1 -f image2 -
  | ssh mymachine 'gzip -d | tee copy.jpg | env DISPLAY=:0 feh -'
 ```
 
-# Exercises
+# Egzersizler
 
-1. Take this [short interactive regex tutorial](https://regexone.com/).
-2. Find the number of words (in `/usr/share/dict/words`) that contain at
-   least three `a`s and don't have a `'s` ending. What are the three
-   most common last two letters of those words? `sed`'s `y` command, or
-   the `tr` program, may help you with case insensitivity. How many
-   of those two-letter combinations are there? And for a challenge:
-   which combinations do not occur?
-3. To do in-place substitution it is quite tempting to do something like
-   `sed s/REGEX/SUBSTITUTION/ input.txt > input.txt`. However this is a
-   bad idea, why? Is this particular to `sed`? Use `man sed` to find out
-   how to accomplish this.
-4. Find your average, median, and max system boot time over the last ten
-   boots. Use `journalctl` on Linux and `log show` on macOS, and look
-   for log timestamps near the beginning and end of each boot. On Linux,
-   they may look something like:
+1. Bu interaktif [regular expression örneklerini](https://regexone.com/) tamamlayın.
+2. `usr/share/dict/words` dizininde, en az üç adet 'a' harfi içeren ve 's' ile bitmeyen kelimelerin sayısını bulun. 
+Daha sonra bu kelimelerin en yaygın son iki harfinin ne olduğunu tespit edin. 
+(Burada `sed` komutunu `y` komutu ile birlikte kullanmak veya `tr` programı size büyük/küçük harf konusunda yardım edebilir.) 
+Bu kelimelerde kaç farklı ikili harf kombinasyonu olduğunu hesaplayın ve 
+hangi kombinasyonların bu kelimelerde bulunmadığını belirlemeye çalışın.
+3. Kendi yerinde değiştirme (in-place substitution) yapmak için 
+`sed s/REGEX/SUBSTITUTION/ input.txt > input.txt` gibi bir komut kullanabilirsiniz. 
+Ancak bu kötü bir fikirdir. Bu işlemi gerçekleştirmek için `man sed` komutunu araştırın ve bu komutu kullanın.
+4. Sisteminizin son 10 boot (önyükleme) süresinin ortalama, medyan ve maksimum değerlerini bulun. 
+Bunu yapmak için Linux sistemlerde `journalctl` , macOS'ta ise `log show` komutunu kullanabilirsiniz. 
+Linux sistemlerde sonuç aşağıdaki gibi görünebilir:
+
    ```
    Logs begin at ...
    ```
@@ -396,8 +361,7 @@ ffmpeg -loglevel panic -i /dev/video0 -frames 1 -f image2 -
    ```
    systemd[577]: Startup finished in ...
    ```
-   On macOS, [look
-   for](https://eclecticlight.co/2018/03/21/macos-unified-log-3-finding-your-way/):
+   macOS sistemlerde ise, [kaynak](https://eclecticlight.co/2018/03/21/macos-unified-log-3-finding-your-way/):
    ```
    === system boot:
    ```
@@ -405,24 +369,19 @@ ffmpeg -loglevel panic -i /dev/video0 -frames 1 -f image2 -
    ```
    Previous shutdown cause: 5
    ```
-5. Look for boot messages that are _not_ shared between your past three
-   reboots (see `journalctl`'s `-b` flag). Break this task down into
-   multiple steps. First, find a way to get just the logs from the past
-   three boots. There may be an applicable flag on the tool you use to
-   extract the boot logs, or you can use `sed '0,/STRING/d'` to remove
-   all lines previous to one that matches `STRING`. Next, remove any
-   parts of the line that _always_ varies (like the timestamp). Then,
-   de-duplicate the input lines and keep a count of each one (`uniq` is
-   your friend). And finally, eliminate any line whose count is 3 (since
-   it _was_ shared among all the boots).
-6. Find an online data set like [this
-   one](https://stats.wikimedia.org/EN/TablesWikipediaZZ.htm), [this
-   one](https://ucr.fbi.gov/crime-in-the-u.s/2016/crime-in-the-u.s.-2016/topic-pages/tables/table-1).
-   or maybe one [from
-   here](https://www.springboard.com/blog/free-public-data-sets-data-science-project/).
-   Fetch it using `curl` and extract out just two columns of numerical
-   data. If you're fetching HTML data,
-   [`pup`](https://github.com/EricChiang/pup) might be helpful. For JSON
-   data, try [`jq`](https://stedolan.github.io/jq/). Find the min and
-   max of one column in a single command, and the sum of the difference
-   between the two columns in another.
+5. Son 3 yeniden başlatmanız arasında paylaşılmayan önyükleme iletilierini bulmaya çalışın. 
+(burada `journalctl` komutunun `-b` flagini inceleyebilirsiniz.) 
+Bu görevi gerçekleştirmek için adım adım ilerleyin. 
+Öncelikle yalnızca son üç yeniden başlatmaya dair kayıtları bulun. 
+Bu esnada `sed '0,/STRING/D'` komutunu kullanabilirsiniz. 
+Ardından bu satırlardaki değişkenleri (zaman belirteçleri gibi) kaldırın. 
+Ardından input satırlarını kaldırın ve satırların toplam sayısını bulun (burada `uniq` komutunu kullanın). 
+Son olarak da  sayısı 3 olan satırları ortadan kaldırın.
+6. Internette bir veri kümesi bulun. [örnek 1](https://stats.wikimedia.org/EN/TablesWikipediaZZ.htm), 
+[örnek 2](https://ucr.fbi.gov/crime-in-the-u.s/2016/crime-in-the-u.s.-2016/topic-pages/tables/table-1), 
+[örnek 3](https://www.springboard.com/blog/free-public-data-sets-data-science-project/).
+Daha sonra bu verileri `curl` kullanarak `fetch` edin. 
+Eğer HTML verisi çekiyorsanız [`pup`](https://github.com/EricChiang/pup) , 
+JSON verisi çekiyor iseniz [`jq`](https://stedolan.github.io/jq/) size yardımcı olabilir. 
+Bu verilerde tek bir komut ile bir sütundaki minimum ve maksimum değerleri 
+ve herhangi iki sütun arasındaki toplam farkı bulun.

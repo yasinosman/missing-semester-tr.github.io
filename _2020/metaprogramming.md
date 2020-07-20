@@ -3,59 +3,58 @@ layout: lecture
 title: "Metaprogramming"
 details: build systems, dependency management, testing, CI
 date: 2019-01-27
-ready: false
+ready: true
 video:
   aspect: 56.25
   id: _Ms1Z4xfqv4
 ---
 
-What do we mean by "metaprogramming"? Well, it was the best collective
-term we could come up with for the set of things that are more about
-_process_ than they are about writing code or working more efficiently.
-In this lecture, we will look at systems for building and testing your
-code, and for managing dependencies. These may seem like they are of
-limited importance in your day-to-day as a student, but the moment you
-interact with a larger code base through an internship or once you enter
-the "real world", you will see this everywhere. We should note that
-"metaprogramming" can also mean "[programs that operate on
-programs](https://en.wikipedia.org/wiki/Metaprogramming)", whereas that
-is not quite the definition we are using for the purposes of this
-lecture.
+Aslında "metaprogramming" derken neyi kastediyoruz? İşin aslı, bu terim kod yazmaktan veya 
+verimli çalışmaktan farklı olarak, daha çok
+_süreçleri_ ifade etmek adına bulabildiğimiz en müşterek, en kolektif kavramdı .
+Bu derste; kodlarınızı derleyen, test eden ve bağımlılıklarını yöneten sistemleri inceleyeceğiz.
+Bu konu bir öğrenci olarak size önemsiz gibi gözükebilir fakat stajyerlik dönemizde veya "gerçek dünyaya" atıldığınız zaman
+büyük kod tabanlarıyla karşılaşacaksınız, işte o zaman bu kavram sık sık karşınıza çıkacak.
+Bahsetmekte fayda var,
+"metaprogramming" aynı zamanda "[programları çalıştıran program](https://en.wikipedia.org/wiki/Metaprogramming)", 
+anlamında kullanılabilir. Fakat bu tanım, derste anlatılmak istenen bağlamı tam olarak karşılamamaktadır.
+
+
 
 # Build systems
 
-If you write a paper in LaTeX, what are the commands you need to run to
-produce your paper? What about the ones used to run your benchmarks,
-plot them, and then insert that plot into your paper? Or to compile the
-code provided in the class you're taking and then running the tests?
+LaTeX'de bir makale yazdığınızı düşünün, dökümanınızı elde etmek için hangi kodları 
+çalıştırmanız gerekir? 
+Peki ya benchmark yapmak için,
+elde ettiğiniz sonuçları grafik haline getirmek için,
+grafikleri dökümanınıza eklemek için çalıştırdıklarınız? Ya da aldığınız derste size verilen kodu
+derlemek ve testlerini yapmak için çalışırdığınız kodlar?
 
-For most projects, whether they contain code or not, there is a "build
-process". Some sequence of operations you need to do to go from your
-inputs to your outputs. Often, that process might have many steps, and
-many branches. Run this to generate this plot, that to generate those
-results, and something else to produce the final paper. As with so many
-of the things we have seen in this class, you are not the first to
-encounter this annoyance, and luckily there exist many tools to help
-you!
+Çoğu projede, kod içersin ya da içermesin,"build process" denilen bir süreç vardır.
+Bilgisayara verdiğiniz girdiden, çıktınızı elde etmek için yapılan operasyonlar 
+bütünü de denebilir.Genellikle, bu işlem birçok adım ve branch barındırır.
+"Bu grafiği elde etmek için bunu 
+çalıştırın, sonuçları elde etmek farklı bir şey çalıştırın,
+dökümanın son halini elde etmek için daha farklı bir şey 
+çalıştırın" vs.Bu derste gördüğümüz çoğu şey gibi, 
+bu baş belası durumla karşılaşan ilk kişi siz değilsiniz, 
+şansınıza size yardım edecek pek çok araç mevcut!
 
-These are usually called "build systems", and there are _many_ of them.
-Which one you use depends on the task at hand, your language of
-preference, and the size of the project. At their core, they are all
-very similar though. You define a number of _dependencies_, a number of
-_targets_, and _rules_ for going from one to the other. You tell the
-build system that you want a particular target, and its job is to find
-all the transitive dependencies of that target, and then apply the rules
-to produce intermediate targets all the way until the final target has
-been produced. Ideally, the build system does this without unnecessarily
-executing rules for targets whose dependencies haven't changed and where
-the result is available from a previous build.
+Bunlar genellikle "build systems" olarak adlandırılır, ve bunlardan _çok_ vardır.
+Hangisini kullanacağınız elinizdeki göreve , programlama dili tercihinize
+ve projenin büyüklüğüne göre değişir. Aslında temelde hepsi birbirine benzerdir. Siz _bağımlılık_ sayısını ,
 
-`make` is one of the most common build systems out there, and you will
-usually find it installed on pretty much any UNIX-based computer. It has
-its warts, but works quite well for simple-to-moderate projects. When
-you run `make`, it consults a file called `Makefile` in the current
-directory. All the targets, their dependencies, and the rules are
-defined in that file. Let's take a look at one:
+_hedef_, ve _kural_ sayısını, birinden diğerine geçerken tanımlarsınız.
+Ayrıca build system'e belirli bir hedef istediğinizi söylersiniz,
+bu sistemin işi hedefin tüm geçişli bağımlılıklarını bulmaktır, daha sonra son hedef elde edilene kadar tüm kurallar ara hedeflere uygulanır, nihai amaç son hedefi elde etmektir.
+İdeal olarak, "build system" bağımlılıkları değişmeyen hedefler için yeniden çalışmaz,
+önceki derlemeden elde ettiği sonuçları tekrar kullanır.
+
+`make` en sık kullanılan build system'lerden birisidir, bunu her "UNIX-based" bilgisayarda yüklenmiş olarak 
+bulabilirsiniz.Kendine özgü handikapları olduğu halde projelerinizi yönetmekte oldukça iyi iş çıkarmaktadır. 
+`make` komutunu çalıştırdığınızda, dizininizde bulunan `Makefile` adındaki dosyaya başvurur. 
+Bütün hedefler, onların bağımlılıkları ve kurallar bu dosyada tanımlanmıştır. 
+Mesela bir tanesini inceleyelim:
 
 ```make
 paper.pdf: paper.tex plot-data.png
@@ -65,29 +64,30 @@ plot-%.png: %.dat plot.py
 	./plot.py -i $*.dat -o $@
 ```
 
-Each directive in this file is a rule for how to produce the left-hand
-side using the right-hand side. Or, phrased differently, the things
-named on the right-hand side are dependencies, and the left-hand side is
-the target. The indented block is a sequence of programs to produce the
-target from those dependencies. In `make`, the first directive also
-defines the default goal. If you run `make` with no arguments, this is
-the target it will build. Alternatively, you can run something like
-`make plot-data.png`, and it will build that target instead.
+Bu dosyadaki her direktif, sağ tarafı kullanarak sol tarafı nasıl elde edeceğimize dair gereken kurallardır. 
+Başka bir ifadeyle, sağ tarafta tanımlanan şeyler bağımlılıklardır, sol taraftakiler ise hedeftir.
+Girintili blok ise, bağımlılıklardan
+hedefi elde etmek için gereken sıralı programlardır.  
+`make` de , ilk direktif aynı zamanda ilk hedefi de tanımlar. 
+Eğer`make`'i argüman olmadan çalıştırırsanız, derleyeceği hedef budur. 
+Alternatif olarak, böyle bir şey de çalıştırabilirsiniz:
 
-The `%` in a rule is a "pattern", and will match the same string on the
-left and on the right. For example, if the target `plot-foo.png` is
-requested, `make` will look for the dependencies `foo.dat` and
-`plot.py`. Now let's look at what happens if we run `make` with an empty
-source directory.
+`make plot-data.png`, `make` şimdi bu hedefi derleyecektir.
+
+Kuraldaki `%` işareti "pattern"dir, yani bir düzendir, soldaki ve sağdaki aynı string ifadeleri eşleştirir. Örneğin, 
+
+hedef olarak `plot-foo.png` istenirse, `make` bağımlılıklara bakacaktır. Bunlar `foo.dat` ve
+`plot.py` dosyalarıdır. Şimdi `make` kaynak dizin olmadan çalıştırılırsa ne olur ona bakalım.
 
 ```console
 $ make
 make: *** No rule to make target 'paper.tex', needed by 'paper.pdf'.  Stop.
 ```
+`make` bize `paper.pdf` dosyasını çalıştırmak için, `paper.tex` dosyasına ihtiyacı olduğunu, fakat bunu 
 
-`make` is helpfully telling us that in order to build `paper.pdf`, it
-needs `paper.tex`, and it has no rule telling it how to make that file.
-Let's try making it!
+gerçekleştirebilmek için gerekli talimatlara sahip olmadığını söylüyor.
+
+Haydi bu dosyayı oluşturalım!
 
 ```console
 $ touch paper.tex
@@ -95,10 +95,10 @@ $ make
 make: *** No rule to make target 'plot-data.png', needed by 'paper.pdf'.  Stop.
 ```
 
-Hmm, interesting, there _is_ a rule to make `plot-data.png`, but it is a
-pattern rule. Since the source files do not exist (`foo.dat`), `make`
-simply states that it cannot make that file. Let's try creating all the
-files:
+Hmm, ilginç,  `plot-data.png` dosyasını yapmak için bir kural var, fakat bu
+
+düzen kuralı(pattern rule). Kaynak dosyası mevcut olmadığı için (`foo.dat`), `make`
+basitçe bu dosyayı yapamayacağını söylüyor. Şimdi bütün dosyaları oluşturmayı deneyelim:
 
 ```console
 $ cat paper.tex
@@ -130,7 +130,7 @@ $ cat data.dat
 5 8
 ```
 
-Now what happens if we run `make`?
+Şimdi `make`i çalıştırırsak ne olur?
 
 ```console
 $ make
@@ -139,18 +139,19 @@ pdflatex paper.tex
 ... lots of output ...
 ```
 
-And look, it made a PDF for us!
-What if we run `make` again?
+Bakın, bizim için bir PDF dosyası oluşturdu!
+
+Peki`make`i yeniden çalıştırırsak ne olur?
 
 ```console
 $ make
 make: 'paper.pdf' is up to date.
 ```
 
-It didn't do anything! Why not? Well, because it didn't need to. It
-checked that all of the previously-built targets were still up to date
-with respect to their listed dependencies. We can test this by modifying
-`paper.tex` and then re-running `make`:
+Hiçbir şey olmadı! Neden? Çünkü ihtiyaç duymadı. 
+Bağımlılıklara baktı ve hedeflerin bu bağımlılıklara uygun olduğunu 
+tespit etti, yeni eklenen bir bağımlılık yok bu yüzden yeniden çıktı üretmeye de gerek yok.
+Bunu, `paper.tex` dosyasını değiştirerek ve yeniden `make` çalıştırarak kontrol edebiliriz:
 
 ```console
 $ vim paper.tex
@@ -159,168 +160,178 @@ pdflatex paper.tex
 ...
 ```
 
-Notice that `make` did _not_ re-run `plot.py` because that was not
-necessary; none of `plot-data.png`'s dependencies changed!
+Dikkat edin `make` , `plot.py` dosyasını _yeniden çalıştırmaya_ ihtiyaç duymadı; çünkü `plot-data.png` 
+dosyasının hiçbir bağımlılığı değişmedi!
 
-# Dependency management
 
-At a more macro level, your software projects are likely to have
-dependencies that are themselves projects. You might depend on installed
-programs (like `python`), system packages (like `openssl`), or libraries
-within your programming language (like `matplotlib`). These days, most
-dependencies will be available through a _repository_ that hosts a
-large number of such dependencies in a single place, and provides a
-convenient mechanism for installing them. Some examples include the
-Ubuntu package repositories for Ubuntu system packages, which you access
-through the `apt` tool, RubyGems for Ruby libraries, PyPi for Python
-libraries, or the Arch User Repository for Arch Linux user-contributed
-packages.
 
-Since the exact mechanisms for interacting with these repositories vary
-a lot from repository to repository and from tool to tool, we won't go
-too much into the details of any specific one in this lecture. What we
-_will_ cover is some of the common terminology they all use. The first
-among these is _versioning_. Most projects that other projects depend on
-issue a _version number_ with every release. Usually something like
-8.1.3 or 64.1.20192004. They are often, but not always, numerical.
-Version numbers serve many purposes, and one of the most important of
-them is to ensure that software keeps working. Imagine, for example,
-that I release a new version of my library where I have renamed a
-particular function. If someone tried to build some software that
-depends on my library after I release that update, the build might fail
-because it calls a function that no longer exists! Versioning attempts
-to solve this problem by letting a project say that it depends on a
-particular version, or range of versions, of some other project. That
-way, even if the underlying library changes, dependent software
-continues building by using an older version of my library.
+# Bağımlılık Yönetimi
 
-That also isn't ideal though! What if I issue a security update which
-does _not_ change the public interface of my library (its "API"), and
-which any project that depended on the old version should immediately
-start using? This is where the different groups of numbers in a version
-come in. The exact meaning of each one varies between projects, but one
-relatively common standard is [_semantic
-versioning_](https://semver.org/). With semantic versioning, every
-version number is of the form: major.minor.patch. The rules are:
 
- - If a new release does not change the API, increase the patch version.
- - If you _add_ to your API in a backwards-compatible way, increase the
-   minor version.
- - If you change the API in a non-backwards-compatible way, increase the
-   major version.
 
-This already provides some major advantages. Now, if my project depends
-on your project, it _should_ be safe to use the latest release with the
-same major version as the one I built against when I developed it, as
-long as its minor version is at least what it was back then. In other
-words, if I depend on your library at version `1.3.7`, then it _should_
-be fine to build it with `1.3.8`, `1.6.1`, or even `1.3.0`. Version
-`2.2.4` would probably not be okay, because the major version was
-increased. We can see an example of semantic versioning in Python's
-version numbers. Many of you are probably aware that Python 2 and Python
-3 code do not mix very well, which is why that was a _major_ version
-bump. Similarly, code written for Python 3.5 might run fine on Python
-3.7, but possibly not on 3.4.
+Daha yüksek seviyelerde, yazılım projeniz, kendileri proje olan bağımlılıklara sahip olabilir.
+Projeniz, yüklü programlara (örneğin `python`), sistem paketlerine (örneğin `openssl`),
+ ya da yazılım dilinin içinde 
+gelen kütüphanelere (örneğin `matplotlib`) bağımlı olabilir.
+ Bugünlerde, çoğu bağımlılıklar _repository_ (depo) 
+üzerinden erişilebilir durumda, bu depolar fazla miktarda bağımlılıklara
+ tek bir yerden erişmemize olanak sağlar. Bu 
+sayede bu bağımlılıkları yüklemek kolay ve zahmetsiz bir hal alır.
 
-When working with dependency management systems, you may also come
-across the notion of _lock files_. A lock file is simply a file that
-lists the exact version you are _currently_ depending on of each
-dependency. Usually, you need to explicitly run an update program to
-upgrade to newer versions of your dependencies. There are many reasons
-for this, such as avoiding unnecessary recompiles, having reproducible
-builds, or not automatically updating to the latest version (which may
-be broken). An extreme version of this kind of dependency locking is
-_vendoring_, which is where you copy all the code of your dependencies
-into your own project. That gives you total control over any changes to
-it, and lets you introduce your own changes to it, but also means you
-have to explicitly pull in any updates from the upstream maintainers
-over time.
+Mesela `apt` aracılığıyla eriştiğimiz Ubuntu paket depoları(Ubuntu package repositories) bu konu hakkında güzel bir 
+örnek teşkil eder , Hakeza Ruby kütüphaneleri için _RubyGems_, 
+Python kütüphaneleri için _PyPi_, veya Arch Linux 
+paketleri için Arch kullanıcı depoları(Arch User Repository) bağımlılık yönetimi için işlevsel bir kullanım sağlarlar.
+Bu depoların çalışma mekanikleri birbirlerinden farklı olduğu için, herhangi biri
+hakkında daha fazla detaya inmeyeceğiz. Bunun yerine her depoda ortak bulunan terimlerden bahsedeceğiz. Bunlardan 
+ilki _versioning_'dir(versiyonlama).
 
-# Continuous integration systems
+Çoğu proje, her yayımladığı sürüm için bir _version number_(sürüm numarası)'a 
+sahiptir. Genellikle bunlar 8.1.3 veya 
+64.1.20192004 gibi sayılardır. Bunlar çoğu zaman -fakat her zaman değil- numerik sayılardır.
+Sürüm numaraları birçok amaca hizmet eder, 
+bunlardan en önemlisi yazılımın çalıştığını garanti altına almaktır. 
 
-As you work on larger and larger projects, you'll find that there are
-often additional tasks you have to do whenever you make a change to it.
-You might have to upload a new version of the documentation, upload a
-compiled version somewhere, release the code to pypi, run your test
-suite, and all sort of other things. Maybe every time someone sends you
-a pull request on GitHub, you want their code to be style checked and
-you want some benchmarks to run? When these kinds of needs arise, it's
-time to take a look at continuous integration.
+Örnek vermek gerekirse, benim bir kütüphaneme yeni bir sürüm çıkardığımı hayal edin.
+Diyelim ki bu yeni sürümde ben bir metodun ismini değiştirdim,
+eğer birisi benim kütüphaneme bağımlılığı olan yazılımını derlemeye çalıştığında yazılım 
+hata verecektir. Çünkü çağırdığı metod ben ismini değiştirdiğim için artık mevcut değil! 
+Sürüm numarası işte bu noktada çok önemli. 
+Yukarıda örneğini verdiğim durumda kullanıcı benim çıkardığım yeni sürümü değil de eski sürümü kullanarak kendi yazılımını başarıyla derleyip çalıştırabilir.
 
-Continuous integration, or CI, is an umbrella term for "stuff that runs
-whenever your code changes", and there are many companies out there that
-provide various types of CI, often for free for open-source projects.
-Some of the big ones are Travis CI, Azure Pipelines, and GitHub Actions.
-They all work in roughly the same way: you add a file to your repository
-that describes what should happen when various things happen to that
-repository. By far the most common one is a rule like "when someone
-pushes code, run the test suite". When the event triggers, the CI
-provider spins up a virtual machines (or more), runs the commands in
-your "recipe", and then usually notes down the results somewhere. You
-might set it up so that you are notified if the test suite stops
-passing, or so that a little badge appears on your repository as long as
-the tests pass.
+Fakat bu da tam olarak ideal bir kullanım senaryosu değil.
+Ya ben kütüphanemin genel arayüzünü _değiştirmeyen_ (Buna "API" diyoruz) bir güvenlik yaması yayınladıysam ve eski sürümlerin hepsi bu yamayı almak zorundaysa ne olacak? 
+İşte burada sürüm numarasındaki farklı basamaklar devreye giriyor.
+Her basamağın anlamı projeden projeye farklılık 
+gösterebilir. Fakat genel standart [_semantik sürümleme_](https://semver.org/) olarak adlandırılır.
+Semantik sürümlemede, her sürüm numarası şu şekilde oluşur: **major.minor.patch**.  
 
-As an example of a CI system, the class website is set up using GitHub
-Pages. Pages is a CI action that runs the Jekyll blog software on every
-push to `master` and makes the built site available on a particular
-GitHub domain. This makes it trivial for us to update the website! We
-just make our changes locally, commit them with git, and then push. CI
-takes care of the rest.
+Bu sürümleme yönteminde kurallar şu şekildedir:
+ <ol>
+ <li>Eğer yeni sürüm API'yi değiştirmiyorsa, patch numarasını (son rakam) arttırın.</li>
+ <li>Eğer API'ye geriye uyumlu bir <strong>ekleme</strong> yaptıysanız, minör numarasını (ortadaki rakam) arttırın</li>
+ <li>Eğer API'ye geriye uyumlu <strong>olmayan bir ekleme</strong>  yaptıysanız, major numarasını (ilk rakam) artırın. </li>
+</ol>
 
-## A brief aside on testing
+Bu yöntemin büyük avantajları vardır. Diyelim ki benim projem senin projene bağımlı,
+Benim uygulamamı geliştirdiğim major versiyona gelen son sürümü kullanmam da _sakınca yoktur_. 
+Başka bir deyişle, eğer ben senin kütüphanenin `1.3.7` sürümüne bağımlıysam, `1.3.8`, `1.6.1` hatta `1.3.0` gibi sürümleri kullanmam sorun çıkarmayacaktır.
+Fakat `2.2.4`  versiyonu muhtemelen problem yaratacaktır çünkü artık major sürüm değişmiştir.
 
-Most large software projects come with a "test suite". You may already
-be familiar with the general concept of testing, but we thought we'd
-quickly mention some approaches to testing and testing terminology that
-you may encounter in the wild:
+Python dilinin sürüm numaraları buna çok güzel bir örnektir.
+Belki farkındasınızdır, Python 2 ve Python 3 olmak üzere iki farklı Python versiyonu vardır,
+bu iki sürüm birbiriyle fazla uyumlu değildir ve birinde yazılan kod diğerinde muhtemelen çalışmaz.
+Çünkü major sürümleri farklıdır. Yukarıdaki örneğe benzer şekilde Python'un 3.5 sürümünde yazılan kod yüksek ihtimalle 3.7'de sorunsuz çalışacaktır, fakat 2.4 sürümünde çalışma olasılığı hayli düşüktür.
 
- - Test suite: a collective term for all the tests
- - Unit test: a "micro-test" that tests a specific feature in isolation
- - Integration test: a "macro-test" that runs a larger part of the
-   system to check that different feature or components work _together_.
- - Regression test: a test that implements a particular pattern that
-   _previously_ caused a bug to ensure that the bug does not resurface.
- - Mocking: the replace a function, module, or type with a fake
-   implementation to avoid testing unrelated functionality. For example,
-   you might "mock the network" or "mock the disk".
+Bağımlılık yönetim sistemleriyle uğraşırken, _lock files_ adında bir dosyayla karşılaşabilirsiniz.
+Lock File kısaca _o anki_ bağımlılıklarınızın sürümlerini tutar.
+Genelde bağımlılıklarınızı yeni bir versiyona güncellemek için ayrıyetten bir program çalıştırırsınız,
+bu yöntemin gereksiz derleme yapmaktan, 
+yeniden çalıştırılabilir uygulama dosyaları elde etmek ya da bağımlılığın bizim 
+haberimiz olmadan kendini güncellemesini engellemek gibi(ki bu durumun yazılımın çökmesine neden olabilir) pek çok 
+sebebi vardır.
 
-# Exercises
+Bağımlılık kitleme (dependency locking) kavramının aşırı yapıldığı duruma _vendoring_ denir. 
+Vendoring'de bağımlılıklarınızın bütün kodlarını kendi projenize kopyalarsınız, 
+bu sizin bağımlılıklar üzerinde tam bir kontrol elde etmenizi sağlar.
+Bu sayede kendi arzunuza göre bağımlılıklar üzerinde ekleme-çıkarma yapabilirsiniz.
+Fakat bağımlılıklara herhangi bir güncelleme geldiği zaman otomatik güncellemeyeceği için sizin 
+ayrıyetten yeni güncellemeleri projenize kendiniz eklemeniz lazım,
+bu da fazla bağımlılıklara sahip projelerde yorucu bir işlem haline gelebilir.
 
- 1. Most makefiles provide a target called `clean`. This isn't intended
-    to produce a file called `clean`, but instead to clean up any files
-    that can be re-built by make. Think of it as a way to "undo" all of
-    the build steps. Implement a `clean` target for the `paper.pdf`
-    `Makefile` above. You will have to make the target
-    [phony](https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html).
-    You may find the [`git
-    ls-files`](https://git-scm.com/docs/git-ls-files) subcommand useful.
-    A number of other very common make targets are listed
-    [here](https://www.gnu.org/software/make/manual/html_node/Standard-Targets.html#Standard-Targets).
- 2. Take a look at the various ways to specify version requirements for
-    dependencies in [Rust's build
-    system](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html).
-    Most package repositories support similar syntax. For each one
-    (caret, tilde, wildcard, comparison, and multiple), try to come up
-    with a use-case in which that particular kind of requirement makes
-    sense.
- 3. Git can act as a simple CI system all by itself. In `.git/hooks`
-    inside any git repository, you will find (currently inactive) files
-    that are run as scripts when a particular action happens. Write a
-    [`pre-commit`](https://git-scm.com/docs/githooks#_pre_commit) hook
-    that runs `make paper.pdf` and refuses the commit if the `make`
-    command fails. This should prevent any commit from having an
-    unbuildable version of the paper.
- 4. Set up a simple auto-published page using [GitHub
-    Pages](https://help.github.com/en/actions/automating-your-workflow-with-github-actions).
-    Add a [GitHub Action](https://github.com/features/actions) to the
-    repository to run `shellcheck` on any shell files in that
-    repository (here is [one way to do
-    it](https://github.com/marketplace/actions/shellcheck)). Check that
-    it works!
- 5. [Build your
-    own](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/building-actions)
-    GitHub action to run [`proselint`](http://proselint.com/) or
-    [`write-good`](https://github.com/btford/write-good) on all the
-    `.md` files in the repository. Enable it in your repository, and
-    check that it works by filing a pull request with a typo in it.
+
+# Sürekli Entegrasyon Sistemleri(Continuous Integration Systems)
+
+Halihazırda büyük veya büyümeye devam eden projelerde çalışırken,
+sadece kod yazmaktan farklı görevleriniz de olacaktır.
+Projenizin dökümantasyonunu güncellemeniz gerekebilir, 
+derlenmiş versiyonunu başka bir yere yüklemeniz gerekebilir,
+kodu PyPi'de yayınlamanız gerekebilir, test yazmanız gerekebilir vb. 
+Hatta Github'da aldığınız her pull request sonrası kodunuzu incelemeniz veya benchmark yapmanız bile gerekebilir.
+Bu tür ihtiyaçlar ortaya çıktığında bakmamız gereken şey _sürekli entegrasyondur_(_continuous integration_).
+
+
+Continuous integration yada kısa adıyla CI, "kodunuz değiştiğinde çalışan işlemleri" karşılamak için bulunmuş komple 
+bir terimdir. Farklı tipte continuous integration hizmeti veren pek çok firma vardır,
+bu hizmetler genelde açık kaynak projeler için ücretsizdir.
+Travis CI, Azure Pipelines ve Github Actions ünlü servislerden bazılarıdır. 
+Bu servisler kabaca şu şekilde çalışır: 
+
+Siz deponuza(repository) belirli bir durum, değişiklik olduğunda deponuzun nasıl davranacağına dair bir yönerge 
+dosyası eklersiniz. 
+Buna dair bir örnek vermek gerekirse, en çok kullanılan yönergelerden birisi "birisi depoya 
+ekleme yaptığında, test kodunu çalıştır" yönergesidir.
+
+Birisi depoya ekleme yaptığında bu talimat çalışır, CI servisini aldığınız platform sizin için bir sanal makine oluşturur (duruma göre birden fazla da olabilir) ve sizin 
+verdiğiniz yönerge doyasına göre kodu çalıştırır, daha sonra sonuçları sizin için kaydeder.
+Bu işleme "test kodu düzgün çalışmazsa beni uyar" tarzında ayarlar ekleyerek sonuçtan haberdar olabilirsiniz.
+
+CI sistemlere örnek olarak şuan bulunduğunuz websitesi örnek verilebilir,
+bu websitenin kodları Github Pages'de bulunuyor.
+Açık kaynak bir proje olan Jekyll website oluşturma aracını kullanarak yaratılan websitemize, herhangi bir 
+ekleme yaptığımızda (ki bunu depomuzdaki `master` branch'ine yapıyoruz) Github Pages CI araçlarını çalıştırır ve 
+bizim için entegrasyon işlemlerini halleder.
+Bu, websayfasını güncellemeyi çok kolay bir hale getirir.Lokalde değişiklikleri yapın,
+daha sonra git aracılığıyla commit edin ve gerisine karışmayın!
+CI geri kalan işlemlerin hepsini halledecektir.
+ 
+
+
+## Testle ilgili kısa bir açıklama
+
+
+Çoğu büyük yazılım projesi kendi bünyesinde "test suite" barındırır (tam karşılamasa da Türkçe'ye 'test odası' olarak 
+çevirebiliriz). 
+Genel olarak test konseptinden bahsettik fakat iş hayatınızda karşılaşabileceğiniz terminolojileri de 
+açıklamakta fayda var:
+ 
+ <ol>
+<li>Test Suite (Test Odası): Bütün yapılan testler için kullanılan kolektif bir terimdir</li>
+<li>Unit Test (Birim Test): Sadece mikro ölçekte, kodun ufak bir kısmını test etme işlemine denir</li>
+<li>Integration Test (Entegrasyon Testi): Sistemdeki farklı özelliklerin yada bileşenlerin, _birbirleriyle uyumlu_ çalışıp çalışmadığını kontrol etmek içim makro ölçekte yapılan teste denir.</li>
+<li>Regression Test (Regresyon Test): Daha önceye hataya(bug) sebep olmuş bir kodun, düzeltilmiş halinin yeniden hata verip vermediğini test etme işlemine denir</li>
+<li>Mocking: Bir fonksiyonun, modülün gereksiz kısımlarını test etmemek için, sahte bir implementasyonla test etmeye denir</li>
+</ol>
+
+# Alıştırmalar
+
+1. Çoğu makefile'lar size `clean` adında bir hedef sağlarlar. Bunun amacı `clean` adında dosya üretmek değildir, 
+aksine make ile yeniden yapılabilecek dosyaları temizlemektir. Şimdi derleme sürecini geriye almanın bir yolunu 
+düşünün. Yukarıdaki `paper.pdf` `Makefile` dosyası için bir `clean` hedefi belirleyin. Hedef
+   [phony](https://www.gnu.org/software/make/manual/html_node/Phony-Targets.html) dosyası olacak.
+     [`git
+
+   ls-files`](https://git-scm.com/docs/git-ls-files) komutlarını yararlı bulabilirsiniz, incelemenizde fayda var.
+   Başka make hedefleri ise bu adreste 
+
+   [listelenmiştir](https://www.gnu.org/software/make/manual/html_node/Standard-Targets.html#Standard-Targets).
+
+2. Bağımlılıklar için sürüm gereksinimlerini belirtmenin çeşitli yollarına göz atın [Rust'ın build system'i](https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html) buna güzel bir örnek olarak verilebilir.
+
+ Çoğu paket depoları benzer syntax'a sahiptir. Her birinde kullanılan ortak karakterler vardır; _caret, tilde, wildcard, comparison ve multiple gibi_.. Bu karakterlerin önem arzettiği bir kullanım senaryosu oluşturun.
+ 
+3. Git kendi başına bir CI servisi gibi kullanılabilir. 
+ 
+   Herhangi bir git deposunda  `.git/hooks` dosyasını bulabilirsiniz. Bu dosyada şu anda aktif olmayan, fakat 
+   belirli bir aksiyon olduğunda çalışan scriptler bulunur. Şimdi bir
+    
+   [`pre-commit(commit öncesi)`](https://git-scm.com/docs/githooks#_pre_commit) hook'u yazın.
+    
+   Bu hook `make paper.pdf` komutunu çalıştırmayı denesin fakat `make`
+   komutu hata verirse commit yapmasın. Bu; derlenemeyen, çalışmayan, uygulamayı bozan commit'lerin yapılmasını 
+   engeller.
+ 
+4. [GitHubPages](https://help.github.com/en/actions/automating-your-workflow-with-github-actions) kullanarak 
+   otomatik yayınlanan bir sayfa oluşturun.
+    
+   Deponuza, shell dosyalarını kontrol eden `shellcheck`'i çalıştıran bir [GitHub Action](https://github.com/features/actions) ekleyin.  (mesela [ bu örnek bunu başarmanın yollarından bir tanesidir](https://github.com/marketplace/actions/shellcheck)). Daha sonra `shellcheck`'in çalıştığından emin olun!
+ 
+ 
+5. [Kendi](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/building-actions)
+ 
+   [`proselint`](http://proselint.com/) çalıştıran Github action'ınızı yazın. 
+   [`write-good`](https://github.com/btford/write-good) uygulamasını
+ 
+   kendi deponuzdaki `.md` dosyalarında çalışacak şekilde ayarlayın .Daha sonra çalışıp çalışmadığını test etmek 
+   için yazım hatası bulunan bir pull request gönderin.
+

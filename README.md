@@ -15,7 +15,27 @@ Bu projenin çevrilmesine katkı sağlamak istiyorsanız lütfen aşağıdaki ad
 - Eğer çevirmek istediğiniz bölüm henüz bir issue halinde belirtilmemişse bir issue başlatıp bu şekilde devam edebilirsiniz.
 - Çevirilecek 11 ana bölüm mevcut. Hep beraber bu eğitimi Türkçeye çevirebiliriz. PR'larınızı bekliyoruz 💪
 
+- **Ayrıca çeviriye başlamadan önce [çeviri rehberimize](https://github.com/missing-semester-tr/missing-semester-tr.github.io/wiki/%C3%87eviri-Standartlar%C4%B1) göz atmayı unutmayın.** 
 
+## Proje Durumu
+
+Projenin anlık durumunu [buradan](https://github.com/missing-semester-tr/missing-semester-tr.github.io/projects/1) takip edebilirsiniz.
+
+| # |   bölümler   |  çevirmen  |  çeviri durmu  |
+| :-: |   --------   |  :------  |  ----------:  |
+| 1 | [course-shell.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/_2020/course-shell.md)  | [`@baspinarenes`](https://github.com/baspinarenes) | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/2020/course-shell/) |
+| 2 | [shell-tools.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/_2020/shell-tools.md)  | [`@eneserciyes`](https://github.com/eneserciyes) | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/2020/shell-tools/) |
+| 3 | [editors.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/_2020/editors.md)  |  [`@emrullahcirit`](https://github.com/emrullahcirit) | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/2020/editors/) |
+| 4 | [data-wrangling.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/_2020/data-wrangling.md)  | [`@yasinosman`](https://github.com/yasinosman) | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/data-wrangling/) |
+| 5 | [command-line.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/_2020/command-line.md)  | [`@aliozgur`](https://github.com/aliozgur) | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/2020/command-line/) |
+| 6 | [version-control.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/_2020/version-control.md)  | [`@hasantezcan`](https://github.com/hasantezcan) | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/2020/version-control/) |
+| 7 | [debugging-profiling.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/_2020/debugging-profiling.md)  |[`@aliozgur`](https://github.com/aliozgur)  | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/2020/debugging-profiling/) |
+| 8 | [metaprogramming.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/_2020/metaprogramming.md)  | [`@mustafasakalli`](https://github.com/mustafasakalli) | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/2020/metaprogramming) |
+| 9 | [security.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/_2020/security.md)  | [`@calganaygun`](https://github.com/calganaygun) | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/2020/security/) |
+| 10 | [potpourri.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/_2020/potpourri.md) |  [`@aliozgur`](https://github.com/aliozgur) | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/2020/potpourri/) |
+| 11 | [qa.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/_2020/qa.md) | [`@baspinarenes`](https://github.com/baspinarenes) | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/qa) |
+| * | [about.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/about.md)  | [`@hasantezcan`](https://github.com/hasantezcan)  | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/about/) |
+| * | [license.md](https://github.com/missing-semester-tr/missing-semester-tr.github.io/blob/master/license.md)  | [`@alpercun`](https://github.com/alpercun)  | [`Tamamlandı ✔`](https://missing-semester-tr.github.io/license/) |
 
 ## Geliştirme
 
