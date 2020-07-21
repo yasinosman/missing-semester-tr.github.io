@@ -10,19 +10,19 @@ video:
 
 ## İçindekiler
 
-- [Tuş Kombinasyonlarını Ayarlama](#keyboard-remapping)
-- [Arka Planda Çalışan Servisler (Daemons)](#daemons)
+- [Tuş Kombinasyonlarını Ayarlama](#tuş-kombinasyonlarını-ayarlama)
+- [Arka Planda Çalışan Servisler (Daemons)](#arka-planda-çalışan-servisler-daemons) 
 - [FUSE](#fuse)
-- [Yedekleme](#backups)
-- [Uygulama Programlama Ara Yüzleri (API)](#apis)
-- [Komut Satırı İpuçları](#common-command-line-flagspatterns)
-- [Pencere Yöneticileri](#window-managers)
-- [Sanal Özel Ağalar (VPN)](#vpns)
+- [Yedekleme](#yedekleme)
+- [Uygulama Programlama Ara Yüzleri (API)](#uygulama-programlama-ara-yüzleri-api)
+- [Komut Satırı İpuçları](#komut-satırı-i̇puçları)
+- [Pencere Yöneticileri](#pencere-yöneticileri)
+- [Sanal Özel Ağalar (VPN)](#sanal-özel-ağalar-vpn)
 - [Markdown](#markdown)
-- [Hammerspoon(macOS masaüstü otomasyonu)](#hammerspoon-desktop-automation-on-macos)
-- [Başlatma ve Canlı USB'ler](#booting--live-usbs)
-- [Docker, Vagrant, Sanal Makinalar, Bulut, OpenStack](#docker-vagrant-vms-cloud-openstack)
-- [Not Defterleri Programlama Ortamları](#notebook-programming)
+- [Hammerspoon (macOS masaüstü otomasyonu)](#hammerspoon-macos-masaüstü-otomasyonu)
+- [Başlatma ve Canlı USB'ler](#başlatma-ve-canlı-usbler)
+- [Docker, Vagrant, Sanal Makinalar, Bulut, OpenStack](#docker-vagrant-sanal-makinalar-bulut-openstack)
+- [Not Defteri Programlama Ortamları](#not-defteri-programlama-ortamları)
 - [GitHub](#github)
 
 ## Tuş Kombinasyonlarını Ayarlama
@@ -208,7 +208,7 @@ ortak bazı özelliklere de sahiptir:
 Çoğunuz Windows, macOS ve Ubuntu'dan sürükle/bırak tarzındaki pencere yöneticilerine aşinasınızdır. Bu tür pencere yöneticileri ekranda birbirinden ayrı olarak konumlandırılabilen, boyutu değiştirilebilen, sürüklenebilen ve bir birinin üstüne konumlandırılabilen pencereleri yönetirler. Ancak, bunlar pencere yöneticileri arasındaki türlerden sadece bir tanesidir ve bu tür pencere yöneticilerine `floating` pencere yöneticileri denir. Bu türün dışında, özellikle Linux için, çok farklı türde pencere yöneticileri de vardır. `floating` pencere yöneticilerine en yaygın alternatiflerden birisi de `tiling` pencere yöneticileridir. `tiling` pencere yöneticileri kullanıldığına pencereler hiç bir zaman bir biri ile çakışmaz ve pencereler ekranınızda alt alta veya yan yana kendilerine ait alanları kullanacak şekilde (tmux'daki bölmeler gibi) organize edilirler. `tiling` pencere yöneticileri kullanıldığında ekranda açık olan tüm uygulamalar aynı anda belirli bir dizilime göre yan yana ve/veya alt alta gösterilirler. Tek bir aktif pencereniz varsa bu pencere tüm ekranı kaplar. İkinci bir pencere açtığınızda ise ilk pencerenin boyutları yeni pencereye ekranda alan sağlamak için otomatik olarak küçülür (genelde 2/3 veya 1/3 oranında boyutları küçülür). Üçüncü bir pencere açarsanız ilk iki pencere bu pencereye alan sağlamak için otomatik olarak küçülür. `tmux` bölmelerinde olduğu gibi pencereler arasında da kısayol tuşlarını kullanarak gezinebilir, pencerelerin boyutlarını isteğinize göre değiştirebilirsiniz. `tiling` pencere yöneticileri göz atmaya değer bir araçlardır.
 
 
-## Özel Sanal Ağlar (VPN)
+## Sanal Özel Ağalar (VPN)
 
 Özel sanal ağlar (VPN) bu günlerde oldukça fazla rağbet görüyor ve kullanılıyorlar. Bu durumun her zaman [iyi amaçlar](https://gist.github.com/joepie91/5a9909939e6ce7d09e29) için olup olmadığı ise henüz net değil. VPN'in size sağladığı imkanları ve ortaya çıkaracağı riskleri bilmeniz faydalı olacaktır. En pozitif hali ile VPN, internet hizmet sağlayıcınızı (ISP) değiştirme yöntemidir. Bu durumda bilgisayarınızdan internete çıkan tüm trafik gerçek konumunuz yerine VPN sağlayıcısı üzerinden şifreli bir şekilde çıkacak ve internetin geri kalanı sizin konumunuzun VPN sağlayıcısının konumu ile aynı olduğunu düşünecektir.
 
@@ -234,7 +234,7 @@ Büyük ihtimalle şu ana kadar Markdown'un kendisini veya , adı Markdown olmas
 Link eklemek için linkin metninin köşeli parantez çifti ile çevreleyip hemen ardından da linkin kendisi normal parantez çifti ile çevreleyebiliriz: `[name](url)`. Markdown hızlıca kullanmaya başlayıp her yerde kullanabileceğiniz bir formatlama dilidir. Aslında, bu dersin ve diğer derslerin notları da Markdown kullanılarak yazılmıştır. Ders notlarını saf Markdown hallerini [şu linkten](https://raw.githubusercontent.com/missing-semester-tr/missing-semester-tr.github.io/master/_2020/potpourri.md) inveleyebilirsiniz.
 
 
-## Hammerspoon (masaüstü macOS otomasyonu)
+## Hammerspoon (macOS masaüstü otomasyonu)
 
 [Hammerspoon](https://www.hammerspoon.org/) macOS için kullanılabilen bir masaüstü otomasyon programıdır. Hammerspoon, Lua scriptleri ile işletim sisteminin bileşenlerine erişmenizi ve bu sayede  klavye, fare, pencereler, monitörler, dosya sistemi ve diğer bir çok sistem elemanı ile etkileşimde bulunmanıza imkan sağlar.
 
