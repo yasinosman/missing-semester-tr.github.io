@@ -9,12 +9,12 @@ permalink: /license/
 Bu dersteki web sitesi kaynak kodu, ders notları, alıştırmalar ve ders videoları dahil tüm içerikler Attribution-NonCommercial-ShareAlike 4.0 International [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) altında lisanslanmıştır.
 
 Bu, şunları yapmakta özgür olduğunuz anlamına gelir:
-- **Share** _(Paylaş)_ — Materyali herhangi bir ortamda veya biçimde kopyalayıp yeniden dağıtın
-- **Adapt** _(Adapte Ol)_ — Materyalleri düzenle, dönüştür ve üzerine inşa et
+- **Share** _(Paylaş)_ — Materyali herhangi bir ortamda veya biçimde kopyalayıp yeniden dağıtmak
+- **Adapt** _(Adapte Ol)_ — Materyalleri düzenlemek, dönüştürmek ve üzerine inşa etmek
 
 Aşağıdaki şartlar altında:
 
-- **Attribution** _(Atfetme)_ — Uygun kredi vermeli, lisansa bir bağlantı vermeli ve eğer değişiklik yapıldıysa belirtmelisiniz. Bunu uygun olacak bir şekilde yapabilirsiniz, ancak lisans verenin sizi veya kullanımınızı onayladığını hiçbir şekilde gösteremezsiniz.
+- **Attribution** _(Atfetme)_ — Uygun atıf vermeli, lisansa bir bağlantı vermeli ve eğer değişiklik yapıldıysa belirtmelisiniz. Bunu uygun olacak bir şekilde yapabilirsiniz, ancak lisans verenin sizi veya kullanımınızı onayladığını hiçbir şekilde gösteremezsiniz.
 - **NonCommercial** _(Ticari Olmayan)_— Materyalleri ticari amaçlarla kullanamazsınız.
 - **ShareAlike** _(Beğeni Paylaş)_ — Bu materyal üzerinde düzenleme, değişiklik ve ekleme yaparsanız katkılarınızı orjinal lisansın aynısı ile paylaşmalısınız. 
 

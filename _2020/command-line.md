@@ -8,9 +8,9 @@ video:
   id: e8BO_dYxk5c
 ---
 
-Bu dersimizde komut satırındaki iş yapma şeklimizi ve iş akışımızı iyileştirecek birkaç yöntemi ele alacağız. Dersimizin önceki bölümlerinde komut satırını kullandık, ancak bu aşamaya kadar komut satırında komutları çalıştırmaya odaklanmıştık. Bu dersimizde ise processleri (programların çalışan hali, işlem de denilebilir) eş zamanlı çalıştırmayı ve izlerini sürmeyi, processleri durdurmayı ve askıya almayı ve processleri arka planda çalıştırmayı ele alacağız.     
+Bu dersimizde komut satırındaki iş yapma şeklimizi ve iş akışımızı iyileştirecek birkaç yöntemi ele alacağız. Dersimizin önceki bölümlerinde komut satırını kullandık, ancak bu aşamaya kadar komut satırında komutları çalıştırmaya odaklanmıştık. Bu dersimizde ise processleri (programların çalışan hali, işlem de denilebilir) eş zamanlı çalıştırmayı ve izlerini sürmeyi, processleri durdurmayı, askıya almayı ve arka planda çalıştırmayı ele alacağız.     
 
-Dersimizin bu bölümünde yukarıdaki konulara ilave olarak komut satırı ortamımızı daha yetkin hale getirmek için kullanabileceğimiz araçlardan bazıları olan **alias** (kısaltmalar) kavramını ve **dotfile** adı verilen konfigürasyon dosyalarının kullanımını öğreneceğiz. Alias tanımları ve dotfile dosyaları uzun komutları tekrar tekrar yazmamıza gerek kalmadan kullanmamızı sağlarlar. Örneğin, farklı bilgisayarlarda çalışırken bu araçların kullanılması bize zaman kazandırır. Son olarak bu dersimizde uzaktaki bilgisayarlara SSH kullanarak nasıl erişebileceğimizi de ele alacağız.
+Dersimizin bu bölümünde yukarıdaki konulara ilave olarak komut satırı ortamımızı daha yetkin hale getirmek için kullanabileceğimiz araçlardan bazıları olan **alias** (kısaltmalar) kavramını ve **dotfile** adı verilen konfigürasyon dosyalarının kullanımını öğreneceğiz. Alias tanımları ve dotfile dosyaları uzun komutları tekrar tekrar yazmamıza gerek kalmadan kullanmamızı sağlar. Örneğin, farklı bilgisayarlarda çalışırken bu araçların kullanılması bize zaman kazandırır. Son olarak bu dersimizde uzaktaki bilgisayarlara SSH kullanarak nasıl erişebileceğimizi de ele alacağız.
 
 # Görev Kontrolü
 
@@ -20,7 +20,7 @@ Bazı durumlarda devam eden bir görevi sonlandırma ihtiyacınız olacak. Örne
 
 Komut satırınız processler ile bilgi paylaşımında bulunmak için UNIX işletim sistemi seviyesinde yer alan ve _signal_ (sinyal) adı verilen bir iletişim yöntemi kullanır. Herhangi bir processese bir sinyal geldiğinde process çalışmasını durdurur, gelen sinyali işler ve sinyalin tipine ve içeriğine göre akışını değiştirir. Bu nedenle sinyaller kavram olarak birer _software interrupt_ (yazılım kesmesi) olarak değerlendirilir. 
 
-> **Çevirmenin Notu:** Interrupt (kesme) kavramını yazılım veya donanım seviyesinde sistem bileşenlerinin birbirleri ile haberleşmek için kullandıkları bir yapı olarak düşünebilirsiniz. Yazılım seviyesinde kullanılan kesmeler _sofware interrput_ (yazılım kesmesi) olarak adlandırılır. Donanım (CPU, GPU) seviyesinde kullanılan kesmelere ise _hardware imterrupt_ (donanım kesmesi) olarak adlandırılır. Donanım kesmeleri için IRQ adı verilen ve donanıma doğrudan bağlı fiziksel veri yolu hatları kullanılır.
+> **Çevirmenin Notu:** Interrupt (kesme) kavramını yazılım veya donanım seviyesinde sistem bileşenlerinin birbirleri ile haberleşmek için kullandıkları bir yapı olarak düşünebilirsiniz. Yazılım seviyesinde kullanılan kesmeler _software interrupt_ (yazılım kesmesi) olarak adlandırılır. Donanım (CPU, GPU) seviyesinde kullanılan kesmeler ise _hardware interrupt_ (donanım kesmesi) olarak adlandırılır. Donanım kesmeleri için IRQ adı verilen ve donanıma doğrudan bağlı fiziksel veri yolu hatları kullanılır.
 
 Bizim örneğimizdeki `Ctrl-C` tuş kombinasyonu uygulandığında komut satırı `SIGINT` adı verilen sinyali process'e gönderir.
 
@@ -65,7 +65,7 @@ Sinyaller processleri durdurmanın yanı sıra farklı amaçlar için de kullan�
 
 Askıya alınan görevlerin ön planda çalışmaya devam etmeleri için [`fg`](https://www.man7.org/linux/man-pages/man1/fg.1p.html) komutunu, arka planda çalışmaya devam etmeleri için de [`bg`](http://man7.org/linux/man-pages/man1/bg.1p.html) komutunu kullanabiliriz. 
 
-[`jobs`](https://www.man7.org/linux/man-pages/man1/jobs.1p.html) komutu aktif terminal oturumunda çalışan görevleri listelemek için kullanılır. Bu görevler ile ilişkili komutlarınızda görevlerin pid ( görevleri adları ile veya farklı özellikleri ile aramak için [`pgrep`](https://www.man7.org/linux/man-pages/man1/pgrep.1.html komutunu kullanabilirsiniz) değerlerini kullanabilirsiniz. Process'lere referans vermek için pid değerlerine alternatif olarak, daha kolay bir kullanım sunan, `%` sembolü ve görev numarası (`jobs` komutu tarafından listelenir) kombinasyonunu da kullanabilirsiniz. En son çalıştırılan arka plan görevine referans vermek için ise `$!` özel parametre değerini kullanabilirsiniz.
+[`jobs`](https://www.man7.org/linux/man-pages/man1/jobs.1p.html) komutu aktif terminal oturumunda çalışan görevleri listelemek için kullanılır. Bu görevler ile ilişkili komutlarınızda görevlerin pid  (görevleri adları ile veya farklı özellikleri ile aramak için [`pgrep`](https://www.man7.org/linux/man-pages/man1/pgrep.1.html komutunu kullanabilirsiniz) değerlerini kullanabilirsiniz. Processlere referans vermek için pid değerlerine alternatif olarak, daha kolay bir kullanım sunan, `%` sembolü ve görev numarası (`jobs` komutu tarafından listelenir) kombinasyonunu da kullanabilirsiniz. En son çalıştırılan arka plan görevine referans vermek için ise `$!` özel parametre değerini kullanabilirsiniz.
 
 > **Çevirmenin Notu:** PID, UNIX'de _Process Identification Number_ adı verilen ve işletim sistemi tarafından otomatik olarak her process için üretilen 5 basamaklı sayısal bir değerdir.
 
@@ -131,7 +131,7 @@ Bahsettiğimiz sinyaller ve diğer sinyaller hakkında daha fazla bilgi almak i�
 
 # Terminal Çoklayıcılar (Multiplexer)
 
-Komut satırı ara yüzünü kullanırken zaman zaman aynı anda birden fazla şey yapmak isteyeceksiniz. Örneğin, kod editörünüz ile programınızı yan yana aynı anda çalıştırmak isteyebilirsiniz. Bu işlemleri ihtiyaç duydukça yeni terminal penceresi açarak yapabileceğiniz gibi bir terminal çoklayıcılar kullanarak daha esnek bir şekilde yapabilirsiniz.
+Komut satırı ara yüzünü kullanırken zaman zaman aynı anda birden fazla şey yapmak isteyeceksiniz. Örneğin, kod editörünüz ile programınızı yan yana aynı anda çalıştırmak isteyebilirsiniz. Bu işlemleri ihtiyaç duydukça yeni terminal penceresi açarak yapabileceğiniz gibi terminal çoklayıcılar kullanarak daha esnek bir şekilde yapabilirsiniz.
 
 [`tmux`](https://www.man7.org/linux/man-pages/man1/tmux.1.html) gibi terminal çoklayıcılar terminal pencerelerini sekmeler (tab) veya bölmeler (pane) kullanarak çoklamanızı ve birden fazla komut satırı oturumundan bu pencerelere erişmenizi ve işlem yapmanızı sağlarlar. Tüm bunlara ilave olarak, terminal çoklayıcılar herhangi bir terminal oturumunu ayırarak bağımsız kullanmanızı ve daha sonra ihtiyaç duymanız halinde bu oturumu var olan bir terminal oturum ile ilişkilendirerek birleştirmenizi sağlarlar. Bu imkanlar, özellikle uzaktan eriştiğiniz bilgisayarlar ile çalışırken `nohup` gibi araçları kullanmaya gerek kalmadan iş akışınızı iyileştirecektir.  
 
@@ -187,7 +187,7 @@ alias gs="git status"
 alias gc="git commit"
 alias v="vim"
 
-# Hatalı yazımları tölere etmek için
+# Hatalı yazımları tolere etmek için
 alias sl=ls
 
 # Var olan komutları daha kullanışlı varsayılan değerler ile tanımlamak için
@@ -384,7 +384,7 @@ Sunuculardaki ssh konfigürasyonu genelde `/etc/ssh/sshd_config` dosyasında yer
 
 ## Diğer Konular
 
-Uzak sunuculara erişim ile ilgili karşılaşılan genel sorunlardan bir tanesi de sunucunun uyku moduna geçmesi ve ağ değişikliği gibi nedenler ile oluşan bağlantı kopmalarıdır. Özellikle gecikme süresi uzun olan SSH bağlantıları kafanızı karıştırabilir. [Mosh](https://mosh.org/), mobil komut satırı, ağ değişikliklerini ve kısa süreli kesintileri yönetip akıllı yerel echo imkanı sunarak ssh'ı bir adım öteye taşır.
+Uzak sunuculara erişim ile ilgili karşılaşılan genel sorunlardan bir tanesi de sunucunun uyku moduna geçmesi ve ağ değişikliği gibi nedenlerle oluşan bağlantı kopmalarıdır. Özellikle gecikme süresi uzun olan SSH bağlantıları kafanızı karıştırabilir. [Mosh](https://mosh.org/), mobil komut satırı, ağ değişikliklerini ve kısa süreli kesintileri yönetip akıllı yerel echo imkanı sunarak ssh'ı bir adım öteye taşır.
 
 Bazen uzak sunucudaki bir dizini kendi bilgisayarınıza mount etmek isteyebilirsiniz. Bunun için [sshfs](https://github.com/libfuse/sshfs) aracını kullanarak uzak dizine kendi bilgisayarınızdaki bir dizin gibi erişebilirsiniz.
 
