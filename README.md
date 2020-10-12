@@ -45,6 +45,12 @@ Siteyi yerel olarak oluşturmak ve görüntülemek için şunu çalıştırın:
 bundle exec jekyll serve -w
 ```
 
+## Basında 
+
+> `"Hiç Anlatılmamış Bilgisayar Bilimleri Döneminiz"`
+- [Teknoloji.org - Özgür Doğan](https://teknoloji.org/mit-hic-anlatilmamis-bilgisayar-bilimleri-doneminiz/)
+- [Bağımsız Geliştirici - Podcast](https://open.spotify.com/episode/5BRsbvFPaCFoEzzgdLeFJ4)
+
 ## Lisans
 
 Bu dersteki web sitesi kaynak kodu, ders notları, alıştırmalar ve ders videoları dahil tüm içerikler Attribution-NonCommercial-ShareAlike 4.0 International [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) altında lisanslanmıştır. Katkılar veya çeviriler hakkında daha fazla bilgi için [buraya](https://missing-semester-tr.github.io/license/) bakın.
