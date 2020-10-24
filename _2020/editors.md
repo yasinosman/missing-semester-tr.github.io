@@ -40,18 +40,15 @@ Programlayıcıların editör seçmek için çok fazla [seçeneği](https://en.w
 
 Günümüzde hangi editörler daha popüler? Bunun için 
 [StackOverflow](https://insights.stackoverflow.com/survey/2019/#development-environments-and-tools) 
-anketini kontrol edebilirsiniz. [Visual Studio Code]
-(https://code.visualstudio.com/) en popüler editördür. [Vim]
-(https://www.vim.org/) ise komut satırı tabanlı en popüler editördür.
+anketini kontrol edebilirsiniz. [Visual Studio Code](https://code.visualstudio.com/) en popüler editördür. [Vim](https://www.vim.org/) ise komut satırı tabanlı en popüler editördür.
 
 ## Vim
 
 Bu sınıftaki bütün eğitmenler editör olarak Vim kullanıyor. 
 Vim zengin bir geçmişe sahiptir; Vi (1976) editöründen gelmekte ve bugün 
 hala geliştirilmesi devam etmektedir. Vim’in arkasında gerçekten temiz 
-fikirler var ve bu yüzden bir çok araç Vim emülasyon modunu desteklemektedir 
-(ör. 1,4 milyon insan [Visual Studio Code için Vim emülasyonu]
-(https://github.com/VSCodeVim/Vim) kurmuştur. 
+fikirler var ve bu yüzden bir çok araç Vim emülasyon modunu desteklemektedir. 
+Ör. 1,4 milyon insan [Visual Studio Code için Vim emülasyonu](https://github.com/VSCodeVim/Vim) kurmuştur. 
 Sonunda başka bir metin editörüne geçecek olsanız bile Vim muhtemelen öğrenmeye değecektir.
 
 Vim’in bütün fonksiyonlarını 50 dakika içerisinde öğretmek mümkün değil bu yüzden odaklanıp anlatacağımız konular şunlardır;
@@ -125,8 +122,7 @@ Varsayılan olarak Vim, tek bir pencere içeren tek bir sekmeyle açılır.
 
 Command moduna Normal modda iken `:` yazarak giriş yapabiliriz. `:` Tuşuna 
 bastığınızda bilgisayarınızın imleci ekranın altındaki komut satırına atlayacaktır. 
-Bu mod, dosyaları açma, kaydetme, kapatma ve [Vim'den çıkış]
-(https://twitter.com/iamdevloper/status/435555976687923200) yapma gibi 
+Bu mod, dosyaları açma, kaydetme, kapatma ve [Vim'den çıkış](https://twitter.com/iamdevloper/status/435555976687923200) yapma gibi 
 birçok işleve sahiptir.
 
 -   `:q` çıkış (pencereyi kapatır) 
