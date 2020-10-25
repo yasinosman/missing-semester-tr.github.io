@@ -106,7 +106,7 @@ Bu nedenle, ` /.*Disconnected from / `a baktığımızda herhangi bir sayıda
 karakterle başlayan ve ardından `Disconnected from `
 değişmez dizesiyle başlayan herhangi bir metinle eşleştiğini görüyoruz. 
 Bizim de ulaşmaya çalıştığımız sonuç buydu. 
-Ancak kötü niyetli birisinin kullanıcı adını "Disconnected from" yapıp giriş yapmaya çalışsa ne olurdu ?
+Ancak kötü niyetli birisinin kullanıcı adını "Disconnected from" yapıp giriş yapmaya çalışsa ne olurdu?
 
 ```
 Jan 17 03:13:00 thesquareplanet.com sshd[2631]: Disconnected from invalid user Disconnected from 46.97.239.16 port 55920 [preauth]
@@ -151,7 +151,7 @@ Sonra "port" kelimesinin ardından bir dizi rakam gelir. Sonra muhtemelen
 `[preauth]` soneki ve sonra satırın sonu.
 
 Bu tekniği kullanırsa bir kullanıcının kullanıcı adı `Disconnected from` olsa bile bizi zor duruma sokmayacaktır. 
-Nedenini fark edebildiniz mi ?
+Nedenini fark edebildiniz mi?
 
 
 Bununla ilgili bir sorun var ve bu tüm günlüğün boşalması. 
@@ -185,7 +185,7 @@ ssh myserver journalctl
 
 `sed` komutu, metin enjekte etme  (text injecting) (`i` komutunun yardımıyla), 
 satırları yazdırma (`p`komutu ile), dizine göre satır seçme ve daha pek çok ilginç şeyi yapabilir. 
-Bu konuda detaylı bilgi için `mansed` i araştırabilirsiniz.
+Bu konuda detaylı bilgi için `man sed` i araştırabilirsiniz.
 
 Neyse. Şu an sahip olduklarımız, giriş yapmaya çalışan tüm kullanıcı adlarının bir listesini veriyor. 
 Ancak bu bizim bir işimize yaramaz. Ortak olanları arayalım:
@@ -219,7 +219,7 @@ Eğer burada bir değer belirtmeseydik sonuçlar varsayılan olarak satırın so
 En az yaygın olanları isteseydik, `tail` yerine `head` kullanabilirdik. 
 Ayrıca `sort -r` komutu da ters sırada sıralama yapmamızı sağlar.
 
-Tamam, peki her satıra bir kullanıcı adı vermek isteseydik ne yapabilirdik ?
+Tamam, peki her satıra bir kullanıcı adı vermek isteseydik ne yapabilirdik?
 
 ```bash
 ssh myserver journalctl
@@ -256,7 +256,7 @@ Daha da karmaşık bir örnek vermek gerekirse, aşağıdaki kod `c` ile başlay
 
 Buradaki pattern, satırın ilk alanının 1'e eşit olması ve ikinci alanın 
 verilen regular expression ile eşleşmesi gerektiğini belirtir. 
-İkinci kısımda ise kullanıcı adını yazdırır, daha sonra da çıktı sayısını `wc - l` komutu ile sayarız.
+İkinci kısımda ise kullanıcı adını yazdırır, daha sonra da çıktı sayısını `wc -l` komutu ile sayarız.
 
 `awk` bir programlama dili olduğuna göre bu işlemi aşağıdaki gibi de yapabiliriz:
 
@@ -342,7 +342,7 @@ ffmpeg -loglevel panic -i /dev/video0 -frames 1 -f image2 -
 # Egzersizler
 
 1. Bu interaktif [regular expression örneklerini](https://regexone.com/) tamamlayın.
-2. `usr/share/dict/words` dizininde, en az üç adet 'a' harfi içeren ve 's' ile bitmeyen kelimelerin sayısını bulun. 
+2. `/usr/share/dict/words` dizininde, en az üç adet 'a' harfi içeren ve 's' ile bitmeyen kelimelerin sayısını bulun. 
 Daha sonra bu kelimelerin en yaygın son iki harfinin ne olduğunu tespit edin. 
 (Burada `sed` komutunu `y` komutu ile birlikte kullanmak veya `tr` programı size büyük/küçük harf konusunda yardım edebilir.) 
 Bu kelimelerde kaç farklı ikili harf kombinasyonu olduğunu hesaplayın ve 
@@ -369,7 +369,7 @@ Linux sistemlerde sonuç aşağıdaki gibi görünebilir:
    ```
    Previous shutdown cause: 5
    ```
-5. Son 3 yeniden başlatmanız arasında paylaşılmayan önyükleme iletilierini bulmaya çalışın. 
+5. Son 3 yeniden başlatmanız arasında paylaşılmayan önyükleme iletilerini bulmaya çalışın. 
 (burada `journalctl` komutunun `-b` flagini inceleyebilirsiniz.) 
 Bu görevi gerçekleştirmek için adım adım ilerleyin. 
 Öncelikle yalnızca son üç yeniden başlatmaya dair kayıtları bulun. 
