@@ -61,12 +61,18 @@ Ayrıca başkalarının da bu kaynaklardan yararlanması ümidiyle bu dersleri M
 # Çeviriler
 
 - [İngilizce (Orjinal Kaynak)](https://missing.csail.mit.edu/)
-- [Chinese (Geleneksel)](https://missing-semester-zh-hant.github.io/)
-- [Chinese (Basitleştirilmiş)](https://missing-semester-cn.github.io/)
-- [Korean](https://missing-semester-kr.github.io/)
-- [Türkçe](https://missing-semester-tr.github.io/)
+- [Çince (Sadeleştirilmiş)](https://missing-semester-cn.github.io/)
+- [Çince (Geleneksel)](https://missing-semester-zh-hant.github.io/)
+- [Japonca](https://missing-semester-jp.github.io/)
+- [Korece](https://missing-semester-kr.github.io/)
+- [Portekizce](https://missing-semester-pt.github.io/)
+- [Rusça](https://missing-semester-rus.github.io/)
+- [Sırpça](https://netboxify.com/missing-semester/)
+- [İspanyolca](https://missing-semester-esp.github.io/)
+- [Turkçe](https://missing-semester-tr.github.io/)
+- [Vietnamca](https://missing-semester-vn.github.io/)
 
-*Not: Bunlar topluluk çevirileri dışında bağlantılardır. Bunları henüz incelemedik.*
+Not: Bu çeviriler henüz bizler tarafından incelenmemiş topluluk çevirileridir.
 
 Bu sınıfın ders notlarının bir çevirisini oluşturdun mu? [Pull request](https://github.com/missing-semester/missing-semester/pulls) gönder ve çevirini listeye ekleyelim!
 
