@@ -1,7 +1,7 @@
 ---
 layout: lecture
 title: "Potpourri"
-date: 2019-01-29
+date: 2020-01-29
 ready: true
 video:
   aspect: 56.25
@@ -10,8 +10,9 @@ video:
 
 ## İçindekiler
 
+- [İçindekiler](#i̇çindekiler)
 - [Tuş Kombinasyonlarını Ayarlama](#tuş-kombinasyonlarını-ayarlama)
-- [Arka Planda Çalışan Servisler (Daemons)](#arka-planda-çalışan-servisler-daemons) 
+- [Arka Planda Çalışan Servisler (Daemons)](#arka-planda-çalışan-servisler-daemons)
 - [FUSE](#fuse)
 - [Yedekleme](#yedekleme)
 - [Uygulama Programlama Ara Yüzleri (API)](#uygulama-programlama-ara-yüzleri-api)
@@ -20,6 +21,7 @@ video:
 - [Sanal Özel Ağalar (VPN)](#sanal-özel-ağalar-vpn)
 - [Markdown](#markdown)
 - [Hammerspoon (macOS masaüstü otomasyonu)](#hammerspoon-macos-masaüstü-otomasyonu)
+  - [Kaynaklar](#kaynaklar)
 - [Başlatma ve Canlı USB'ler](#başlatma-ve-canlı-usbler)
 - [Docker, Vagrant, Sanal Makinalar, Bulut, OpenStack](#docker-vagrant-sanal-makinalar-bulut-openstack)
 - [Not Defteri Programlama Ortamları](#not-defteri-programlama-ortamları)
