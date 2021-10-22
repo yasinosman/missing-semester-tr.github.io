@@ -1,7 +1,7 @@
 ---
 layout: lecture
 title: "Editörler (Vim)"
-date: 2019-01-15
+date: 2020-01-15
 ready: true
 video:
   aspect: 56.25
