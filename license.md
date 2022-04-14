@@ -16,7 +16,7 @@ Aşağıdaki şartlar altında:
 
 - **Attribution** _(Atfetme)_ — Uygun atıf vermeli, lisansa bir bağlantı vermeli ve eğer değişiklik yapıldıysa belirtmelisiniz. Bunu uygun olacak bir şekilde yapabilirsiniz, ancak lisans verenin sizi veya kullanımınızı onayladığını hiçbir şekilde gösteremezsiniz.
 - **NonCommercial** _(Ticari Olmayan)_— Materyalleri ticari amaçlarla kullanamazsınız.
-- **ShareAlike** _(Beğeni Paylaş)_ — Bu materyal üzerinde düzenleme, değişiklik ve ekleme yaparsanız katkılarınızı orjinal lisansın aynısı ile paylaşmalısınız. 
+- **ShareAlike** _(Beğeni Paylaş)_ — Bu materyal üzerinde düzenleme, değişiklik ve ekleme yaparsanız katkılarınızı orijinal lisansın aynısı ile paylaşmalısınız. 
 
 Bu, okunabilir bir özettir ve bu [lisans](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode) yerine geçmez.
 
