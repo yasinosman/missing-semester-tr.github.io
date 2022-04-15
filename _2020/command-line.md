@@ -199,7 +199,7 @@ alias df="df -h"           # -h daha kolay okunabilir formatta basmak için kull
 alias la="ls -A"
 alias lla="la -l"
 
-# Kısaltmalar ile ezdiğiniz var olan bir komutun orjinalini kullanmak için önüne \ koyun
+# Kısaltmalar ile ezdiğiniz var olan bir komutun orijinalini kullanmak için önüne \ koyun
 \ls
 # Tanımlı bir kısaltmayı unalias ile devre dışı bırakabilirsiniz
 unalias la
@@ -232,7 +232,7 @@ Dotfiles dosyalarını kullanarak konfigüre edebileceğiniz diğer bazı progra
 
 Dotfile dosyalarını nasıl organize etmelisiniz? Bu dosyaların kendi dizinlerinde, kaynak kodu kontrolü altında (git, mercurial vb.) ve sembolik linkler kullanılarak tanımlanması gerekir.
 
-> **Çevirmenin Notu:** Sembolik linkler UNIX benzeri işletim sistemlerinde özel bir dosya türü olup orjinal dosyanın konumunu barındırırlar.
+> **Çevirmenin Notu:** Sembolik linkler UNIX benzeri işletim sistemlerinde özel bir dosya türü olup orijinal dosyanın konumunu barındırırlar.
 
 Bu organizasyon şeklinin şu avantajları vardır:
 

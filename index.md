@@ -60,7 +60,7 @@ Ayrıca başkalarının da bu kaynaklardan yararlanması ümidiyle bu dersleri M
 
 # Çeviriler
 
-- [İngilizce (Orjinal Kaynak)](https://missing.csail.mit.edu/)
+- [İngilizce (Orijinal Kaynak)](https://missing.csail.mit.edu/)
 - [Çince (Sadeleştirilmiş)](https://missing-semester-cn.github.io/)
 - [Çince (Geleneksel)](https://missing-semester-zh-hant.github.io/)
 - [Japonca](https://missing-semester-jp.github.io/)

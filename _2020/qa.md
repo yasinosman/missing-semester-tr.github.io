@@ -394,7 +394,7 @@ ileri ve geri hareket ettirir.
 - Undo Tree - Vim, değişiklikleri takip etmek için oldukça süslü bir
 mekanizmaya sahiptir. Diğer editörlerin aksine, vim değişiklik ağacı saklar.
 Böylece geri alıp farklı değişiklik yapsanız bile undo tree'de gezinerek
-orjinal durumuna geri dönebilirsiniz. [gundo.vim](https://github.com/sjl/gundo.vim)
+orijinal durumuna geri dönebilirsiniz. [gundo.vim](https://github.com/sjl/gundo.vim)
 ve [undotree](https://github.com/mbbill/undotree) gibi bazı eklentiler bu
 ağacı grafiksel yolla gösterir. 
 - Zamana Göre Geri Alma - `:earlier` ve `:later` komutları, her seferinde

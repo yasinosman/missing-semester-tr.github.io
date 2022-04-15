@@ -2,7 +2,7 @@
 
 [The Missing Semester of Your CS Education](https://missing-semester-tr.github.io/) için websitesi! (**Türkçe çeviri**)
 
-İngilizce versiyonu(orjinal kaynak) [missing.csail.mit.edu](https://missing.csail.mit.edu/)
+İngilizce versiyonu(orijinal kaynak) [missing.csail.mit.edu](https://missing.csail.mit.edu/)
 
 Katkıları memnuniyetle karşılıyoruz! Eklenecek düzenlemeleriniz veya yeni içeriğiniz varsa, lütfen
 bir issue açın veya bir pull request gönderin.
