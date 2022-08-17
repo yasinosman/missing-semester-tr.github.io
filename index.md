@@ -69,7 +69,7 @@ Ayrıca başkalarının da bu kaynaklardan yararlanması ümidiyle bu dersleri M
 - [Rusça](https://missing-semester-rus.github.io/)
 - [Sırpça](https://netboxify.com/missing-semester/)
 - [İspanyolca](https://missing-semester-esp.github.io/)
-- [Turkçe](https://missing-semester-tr.github.io/)
+- [Türkçe](https://missing-semester-tr.github.io/)
 - [Vietnamca](https://missing-semester-vn.github.io/)
 
 Not: Bu çeviriler henüz bizler tarafından incelenmemiş topluluk çevirileridir.
