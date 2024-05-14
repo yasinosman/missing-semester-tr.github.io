@@ -5,7 +5,7 @@ title: Hiç Anlatılmamış Bilgisayar Bilimleri Döneminiz
 
 Dersler, işletim sistemlerinden makine öğrenmesine kadar bilgisayar bilimlerindeki ileri düzey konular hakkında her şeyi size öğretir, ancak nadiren ele alınan ve daha çok öğrencilere kendi başlarına anlamaları için bırakılan kritik bir konu vardır ki bu konu: **elimizdeki araçlara hakimiyettir**. Biz size komut satırında nasıl ustalaşacağınızı, güçlü bir metin düzenleyiciyi nasıl kullanacağınızı, versiyon kontrol sistemlerinin havalı özelliklerini nasıl kullanacağınızı ve çok daha fazlasını öğreteceğiz!
 
-Öğrenciler eğitim hayatları boyunca bu araçları kullanarak yüzlerce saat geçirirler(ve kariyerleri boyunca da binlerce saat)Bu nedenle bu deneyimi olabildiğine akıcı ve pratik hale getirmek son derece mantıklıdır. Bu araçlara hakim olmak, elinizdeki aletleri doğru yerde ve doğru şekilde nasıl kullanacağınızı anlamak için sarf edeceğiniz süreyi kısaltmak ile kalmaz, aynı zamanda daha önce imkansız derecede karmaşık görünen sorunları çözmenize de olanak tanır.
+Öğrenciler eğitim hayatları boyunca bu araçları kullanarak yüzlerce saat geçirirler (ve kariyerleri boyunca da binlerce saat). Bu nedenle bu deneyimi olabildiğine akıcı ve pratik hale getirmek son derece mantıklıdır. Bu araçlara hakim olmak, elinizdeki aletleri doğru yerde ve doğru şekilde nasıl kullanacağınızı anlamak için sarf edeceğiniz süreyi kısaltmak ile kalmaz; aynı zamanda daha önce imkansız derecede karmaşık görünen sorunları çözmenize de olanak tanır.
 
 Bu derslerin arkasındaki [motivasyonu oku](/about/).
 
@@ -27,7 +27,7 @@ Sign up for the IAP 2020 class by filling out this [registration form](https://f
     {% for lecture in lectures %}
     {% if lecture.phony != true %}
     <li>
-        <strong>{{ lecture.date | date: '%-m/%d' }}</strong>:
+        <strong>{{ lecture.date | date: '%-m/%d/%y' }}</strong>:
         {% if lecture.ready %}
         <a href="{{ lecture.url }}">{{ lecture.title }}</a><span style="float:right"><img
                 src="https://img.shields.io/badge/Türkçe-✔-green"></span>
@@ -60,13 +60,19 @@ Ayrıca başkalarının da bu kaynaklardan yararlanması ümidiyle bu dersleri M
 
 # Çeviriler
 
-- [İngilizce (Orjinal Kaynak)](https://missing.csail.mit.edu/)
-- [Chinese (Geleneksel)](https://missing-semester-zh-hant.github.io/)
-- [Chinese (Basitleştirilmiş)](https://missing-semester-cn.github.io/)
-- [Korean](https://missing-semester-kr.github.io/)
+- [İngilizce (Orijinal Kaynak)](https://missing.csail.mit.edu/)
+- [Çince (Sadeleştirilmiş)](https://missing-semester-cn.github.io/)
+- [Çince (Geleneksel)](https://missing-semester-zh-hant.github.io/)
+- [Japonca](https://missing-semester-jp.github.io/)
+- [Korece](https://missing-semester-kr.github.io/)
+- [Portekizce](https://missing-semester-pt.github.io/)
+- [Rusça](https://missing-semester-rus.github.io/)
+- [Sırpça](https://netboxify.com/missing-semester/)
+- [İspanyolca](https://missing-semester-esp.github.io/)
 - [Türkçe](https://missing-semester-tr.github.io/)
+- [Vietnamca](https://missing-semester-vn.github.io/)
 
-*Not: Bunlar topluluk çevirileri dışında bağlantılardır. Bunları henüz incelemedik.*
+Not: Bu çeviriler henüz bizler tarafından incelenmemiş topluluk çevirileridir.
 
 Bu sınıfın ders notlarının bir çevirisini oluşturdun mu? [Pull request](https://github.com/missing-semester/missing-semester/pulls) gönder ve çevirini listeye ekleyelim!
 
@@ -77,7 +83,7 @@ Elaine Mello, Jim Cain, ve [MIT OpenLearning](https://openlearning.mit.edu/)'a d
 ---
 
 <div class="small center">
-<p><a href="https://github.com/missing-semester/missing-semester">Kaynak kodu</a>.</p>
+<p><a href="https://github.com/missing-semester-tr/missing-semester-tr.github.io">Kaynak kodu</a>.</p>
 <p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA</a> lisansı ile lisanslanmıştır.</p>
 <p>Katkı yapmak &amp;  çeviri rehberine ulaşmak için <a href="/license/">buraya bak</a>.</p>
 </div>
